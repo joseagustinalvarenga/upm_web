@@ -1,0 +1,142 @@
+:root {
+    --primary-color: #F26522;
+    /* Naranja UPM */
+    --secondary-color: #333333;
+    /* Gris oscuro para contraste */
+    --accent-color: #FF8C00;
+    --text-dark: #333333;
+    --text-light: #f8f9fa;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+}
+
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-dark);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* Navbar */
+.navbar-custom {
+    background-color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-custom .navbar-brand {
+    font-weight: 800;
+    color: var(--text-light);
+    letter-spacing: 1px;
+}
+
+.navbar-custom .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: var(--secondary-color);
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(242, 101, 34, 0.8), rgba(242, 101, 34, 0.6)), url('/images/university_campus_hero.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 150px 0;
+    text-align: center;
+}
+
+.hero-section h1 {
+    color: white;
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-section p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+.btn-primary-custom {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    font-weight: bold;
+    border: none;
+    padding: 10px 30px;
+    margin-top: 20px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-primary-custom:hover {
+    background-color: #e6b800;
+    transform: translateY(-2px);
+    color: var(--primary-color);
+}
+
+/* Cards */
+.card-hover {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--secondary-color);
+}
+
+/* Footer */
+.footer-custom {
+    background-color: #1a1a1a;
+    color: #cccccc;
+    padding-top: 3rem;
+}
+
+.footer-custom h5 {
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.footer-custom a {
+    color: #cccccc;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-custom a:hover {
+    color: var(--secondary-color);
+}

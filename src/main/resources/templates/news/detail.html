@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <main class="container mt-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/news">Noticias</a></li>
+                <li class="breadcrumb-item active" aria-current="page" th:text="${news.title}">Noticia</li>
+            </ol>
+        </nav>
+
+        <h1 class="display-5" th:text="${news.title}">Título</h1>
+        <p class="text-muted" th:if="${news.eventDate}">Fecha del evento: <span th:text="${news.eventDate}"></span></p>
+        <hr>
+        <div th:if="${news.imageUrl}" class="mb-4">
+            <img th:src="${news.imageUrl}" class="img-fluid rounded" alt="Imagen noticia"
+                style="max-height: 500px; width: 100%; object-fit: cover;">
+        </div>
+        <hr>
+        <div class="content fs-5" style="white-space: pre-wrap;" th:text="${news.content}">
+            Contenido de la noticia...
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>

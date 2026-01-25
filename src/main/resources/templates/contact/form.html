@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Formulario de Contacto</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <p class="mb-2">¿Prefieres una respuesta inmediata?</p>
+                            <a href="https://wa.me/5493764000000" target="_blank" class="btn btn-success btn-lg">
+                                <i class="bi bi-whatsapp me-2"></i> Escribir por WhatsApp
+                            </a>
+                        </div>
+                        <hr class="my-4">
+
+                        <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
+
+                        <form th:action="@{/contact}" th:object="${contactForm}" method="post">
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control" th:field="*{fullName}" id="fullName"
+                                    placeholder="Tu nombre">
+                                <div class="text-danger small" th:if="${#fields.hasErrors('fullName')}"
+                                    th:errors="*{fullName}">Error</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" th:field="*{email}" id="email"
+                                    placeholder="nombre@ejemplo.com">
+                                <div class="text-danger small" th:if="${#fields.hasErrors('email')}"
+                                    th:errors="*{email}">Error</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Asunto</label>
+                                <input type="text" class="form-control" th:field="*{subject}" id="subject"
+                                    placeholder="Asunto del mensaje">
+                                <div class="text-danger small" th:if="${#fields.hasErrors('subject')}"
+                                    th:errors="*{subject}">Error</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Mensaje</label>
+                                <textarea class="form-control" th:field="*{message}" id="message" rows="5"></textarea>
+                                <div class="text-danger small" th:if="${#fields.hasErrors('message')}"
+                                    th:errors="*{message}">Error</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>

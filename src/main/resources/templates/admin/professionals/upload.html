@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Admin Panel</a>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav th:replace="~{fragments/admin_nav :: admin_nav}"></nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Importar Profesionales</h1>
+                </div>
+
+                <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+
+                <div class="alert alert-info">
+                    <h4 class="alert-heading">Instrucciones</h4>
+                    <p>El archivo Excel debe tener las siguientes columnas en orden (sin encabezados o con encabezado en
+                        la primera fila):</p>
+                    <ol>
+                        <li>Nombre Completo</li>
+                        <li>Profesión</li>
+                        <li>Teléfono</li>
+                        <li>Localidad</li>
+                    </ol>
+                    <hr>
+                    <p class="mb-0">Formatos soportados: .xlsx</p>
+                </div>
+
+                <form action="/admin/professionals/import" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Seleccionar archivo Excel</label>
+                        <input class="form-control" type="file" id="file" name="file" accept=".xlsx" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Importar</button>
+                    <a href="/admin/professionals" class="btn btn-secondary">Cancelar</a>
+                </form>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

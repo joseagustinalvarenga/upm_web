@@ -1,0 +1,40 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:fragment="admin_nav">
+    <div class="position-sticky pt-3">
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Administración</span>
+        </h6>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/courses">Gestión de Cursos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/news">Gestión de Noticias</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/messages">Mensajes de Contacto</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/settings">Configuración del Sitio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/sedes">Gestión de Sedes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/professionals">Directorio Profesionales</a>
+            </li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Cuenta</span>
+        </h6>
+        <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <form th:action="@{/admin/logout}" method="post" class="px-3">
+                    <button type="submit" class="btn btn-sm btn-outline-danger w-100">Cerrar Sesión</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>

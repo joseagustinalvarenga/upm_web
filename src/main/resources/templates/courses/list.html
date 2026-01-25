@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <!-- Page Header -->
+    <div class="bg-light py-5 mb-5 border-bottom">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Nuestra Oferta Académica</h1>
+            <p class="lead text-muted">Descubre los programas diseñados para impulsar tu carrera profesional.</p>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" th:each="course : ${courses}">
+                <div class="card card-hover h-100">
+                    <!-- Image -->
+                    <div th:if="${course.imageUrl != null && !course.imageUrl.isEmpty()}" class="card-img-top"
+                        th:style="'height: 200px; background-image: url(' + ${course.imageUrl} + '); background-size: cover; background-position: center;'">
+                    </div>
+                    <div th:unless="${course.imageUrl != null && !course.imageUrl.isEmpty()}"
+                        class="bg-secondary text-white d-flex align-items-center justify-content-center"
+                        style="height: 200px;">
+                        <i class="bi bi-book-half display-1 opacity-25"></i>
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <span class="badge bg-primary rounded-pill mb-2"
+                                th:text="${course.modality}">Modalidad</span>
+                            <span class="badge bg-success rounded-pill mb-2"
+                                th:if="${course.status.name() == 'PUBLISHED'}">Abierto</span>
+                        </div>
+                        <h5 class="card-title fw-bold" th:text="${course.title}">Título del Curso</h5>
+                        <p class="card-text text-muted small flex-grow-1 text-truncate" th:text="${course.description}">
+                            Descripción breve...</p>
+
+                        <div class="mt-3 text-muted small border-top pt-3">
+                            <i class="bi bi-clock me-1"></i> <span th:text="${course.duration}">Duración</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-top-0 pb-3">
+                        <a th:href="@{/courses/{id}(id=${course.id})}" class="btn btn-outline-primary w-100 fw-bold">Ver
+                            Detalles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-5 d-flex justify-content-center gap-2" th:if="${courses.totalPages > 1}">
+            <a th:if="${courses.hasPrevious()}" th:href="@{/courses(page=${courses.number - 1})}"
+                class="btn btn-outline-secondary">&larr; Anterior</a>
+            <span class="btn btn-light disabled border">Página <span th:text="${courses.number + 1}">1</span> de <span
+                    th:text="${courses.totalPages}">1</span></span>
+            <a th:if="${courses.hasNext()}" th:href="@{/courses(page=${courses.number + 1})}"
+                class="btn btn-outline-secondary">Siguiente &rarr;</a>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>

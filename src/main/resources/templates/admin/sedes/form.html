@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Admin Panel</a>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav th:replace="~{fragments/admin_nav :: admin_nav}"></nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2" th:text="${sede.id != null ? 'Editar Sede' : 'Nueva Sede'}">Formulario Sede</h1>
+                </div>
+
+                <form th:action="@{/admin/sedes}" th:object="${sede}" method="post" class="needs-validation">
+                    <input type="hidden" th:field="*{id}" />
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre de la Sede</label>
+                        <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="description" th:field="*{description}" rows="3"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="address" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="address" th:field="*{address}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="schedule" class="form-label">Horario</label>
+                            <input type="text" class="form-control" id="schedule" th:field="*{schedule}"
+                                placeholder="Ej: Lun a Vie: 8:00 - 20:00">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="phone" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="phone" th:field="*{phone}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mapUrl" class="form-label">URL Google Maps</label>
+                        <input type="text" class="form-control" id="mapUrl" th:field="*{mapUrl}">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="/admin/sedes" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Admin Panel</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-nav w-100"></div> <!-- Spacer -->
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav th:replace="~{fragments/admin_nav :: admin_nav}"></nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+
+                <div class="alert alert-info">
+                    Bienvenido al panel de administración. Selecciona una opción del menú lateral para comenzar.
+                </div>
+
+                <div class="row">
+                    <!-- Stats could go here -->
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary mb-3">
+                            <div class="card-header">Cursos</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Gestionar Carreras y Cursos</h5>
+                                <p class="card-text">Crear, editar o publicar oferta académica.</p>
+                                <a href="/admin/courses" class="btn btn-light btn-sm text-primary w-100">Ir a Cursos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-header">Noticias</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Novedades y Eventos</h5>
+                                <p class="card-text">Publicar noticias recientes para la comunidad.</p>
+                                <a href="/admin/news" class="btn btn-light btn-sm text-success w-100">Ir a Noticias</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-warning mb-3">
+                            <div class="card-header">Mensajes</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Contacto</h5>
+                                <p class="card-text">Revisar mensajes recibidos desde el formulario web.</p>
+                                <a href="/admin/messages" class="btn btn-light btn-sm text-warning w-100">Ir a
+                                    Mensajes</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-info mb-3">
+                            <div class="card-header">Configuración</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Sitio Web</h5>
+                                <p class="card-text">Personalizar imágenes y textos principales.</p>
+                                <a href="/admin/settings" class="btn btn-light btn-sm text-info w-100">Configurar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

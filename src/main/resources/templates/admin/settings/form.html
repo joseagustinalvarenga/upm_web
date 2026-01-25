@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Configuración del Sitio</h4>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+                        <form th:action="@{/admin/settings}" method="post">
+                            <div class="mb-4">
+                                <label for="heroImageUrl" class="form-label fw-bold">URL Imagen Principal (Home)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-image"></i></span>
+                                    <input type="text" class="form-control" id="heroImageUrl" name="heroImageUrl"
+                                        th:value="${heroImageUrl}" required>
+                                </div>
+                                <div class="form-text">Esta imagen aparecerá en el encabezado de la página de inicio.
+                                    Puedes usar una URL externa o local (ej: /images/mi-imagen.png).</div>
+                            </div>
+
+                            <!-- Preview -->
+                            <div class="mb-4 text-center">
+                                <label class="form-label text-muted small">Vista Previa Actual</label>
+                                <div class="ratio ratio-21x9 rounded overflow-hidden border">
+                                    <img th:src="${heroImageUrl}" class="img-fluid object-fit-cover"
+                                        onerror="this.src='/images/university_campus_hero.png'">
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="bi bi-save me-2"></i>Guardar Cambios
+                                </button>
+                                <a href="/admin/dashboard" class="btn btn-outline-secondary">Volver al Dashboard</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>

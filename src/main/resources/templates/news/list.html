@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <main class="container mt-5">
+        <h1 class="mb-4">Noticias y Eventos</h1>
+        <div class="list-group">
+            <a th:each="item : ${news}" th:href="@{/news/{id}(id=${item.id})}"
+                class="list-group-item list-group-item-action" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1" th:text="${item.title}">Título Noticia</h5>
+                    <small th:text="${item.eventDate}">Fecha</small>
+                </div>
+                <div class="d-flex gap-3">
+                    <img th:if="${item.imageUrl}" th:src="${item.imageUrl}" class="rounded"
+                        style="width: 100px; height: 100px; object-fit: cover;" alt="Imagen noticia">
+                    <p class="mb-1 text-truncate" th:text="${item.content}">Contenido...</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-between" th:if="${news.totalPages > 1}">
+            <a th:if="${news.hasPrevious()}" th:href="@{/news(page=${news.number - 1})}"
+                class="btn btn-outline-primary">&larr; Anterior</a>
+            <span class="align-self-center">Página <span th:text="${news.number + 1}">1</span> de <span
+                    th:text="${news.totalPages}">1</span></span>
+            <a th:if="${news.hasNext()}" th:href="@{/news(page=${news.number + 1})}"
+                class="btn btn-outline-primary">Siguiente &rarr;</a>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>

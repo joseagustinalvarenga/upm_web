@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <!-- Page Header -->
+    <div class="bg-light py-5 mb-5 border-bottom">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Directorio de Profesionales</h1>
+            <p class="lead text-muted">Encuentra a nuestros egresados y profesionales destacados.</p>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Filters -->
+        <div class="card mb-4 border-0 shadow-sm bg-light">
+            <div class="card-body">
+                <form action="/professionals" method="get" class="row g-3">
+                    <div class="col-md-5">
+                        <label for="profession" class="form-label">Profesión</label>
+                        <input type="text" class="form-control" id="profession" name="profession"
+                            th:value="${profession}" placeholder="Ej: Abogado, Contador...">
+                    </div>
+                    <div class="col-md-5">
+                        <label for="locality" class="form-label">Localidad</label>
+                        <input type="text" class="form-control" id="locality" name="locality" th:value="${locality}"
+                            placeholder="Ej: Posadas, Oberá...">
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Professionals Table -->
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Profesión</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Localidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pro : ${professionals}">
+                        <td class="fw-bold" th:text="${pro.name}">Juan Perez</td>
+                        <td><span class="badge bg-info text-dark" th:text="${pro.profession}">Abogado</span></td>
+                        <td>
+                            <a th:if="${pro.phone}" th:href="'tel:' + ${pro.phone}"
+                                class="text-decoration-none text-muted">
+                                <i class="bi bi-telephone me-1"></i> <span th:text="${pro.phone}">3764...</span>
+                            </a>
+                        </td>
+                        <td><i class="bi bi-geo-alt me-1 text-danger"></i> <span
+                                th:text="${pro.locality}">Posadas</span></td>
+                    </tr>
+                    <tr th:if="${professionals.empty}">
+                        <td colspan="4" class="text-center py-4 text-muted">No se encontraron profesionales con estos
+                            criterios.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-4" th:if="${professionals.totalPages > 1}">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${!professionals.hasPrevious()} ? 'disabled'">
+                        <a class="page-link"
+                            th:href="@{/professionals(page=${professionals.number - 1}, profession=${profession}, locality=${locality})}">Anterior</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link"
+                            th:text="'Página ' + (${professionals.number + 1}) + ' de ' + ${professionals.totalPages}"></span>
+                    </li>
+                    <li class="page-item" th:classappend="${!professionals.hasNext()} ? 'disabled'">
+                        <a class="page-link"
+                            th:href="@{/professionals(page=${professionals.number + 1}, profession=${profession}, locality=${locality})}">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>

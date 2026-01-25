@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <!-- Page Header -->
+    <div class="bg-light py-5 mb-5 border-bottom">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Nuestras Sedes</h1>
+            <p class="lead text-muted">La UPM está cerca tuyo. Encuentra la sede más cercana en la provincia de
+                Misiones.</p>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="row g-4">
+            <!-- Sede Posadas (Central) -->
+            <div class="col-md-6" th:each="sede : ${sedes}">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-building text-primary display-5 me-3"></i>
+                            <h3 class="card-title fw-bold mb-0" th:text="${sede.name}">Nombre Sede</h3>
+                        </div>
+                        <p class="card-text text-muted" th:text="${sede.description}">Descripción</p>
+                        <ul class="list-unstyled mt-4">
+                            <li class="mb-3" th:if="${sede.address}"><i class="bi bi-geo-alt text-warning me-2"></i>
+                                <span th:text="${sede.address}">Dirección</span></li>
+                            <li class="mb-3" th:if="${sede.schedule}"><i class="bi bi-clock text-warning me-2"></i>
+                                <span th:text="${sede.schedule}">Horario</span></li>
+                            <li class="mb-3" th:if="${sede.phone}"><i class="bi bi-telephone text-warning me-2"></i>
+                                <span th:text="${sede.phone}">Teléfono</span></li>
+                            <li th:if="${sede.mapUrl != null && !sede.mapUrl.isEmpty()}"><a th:href="${sede.mapUrl}"
+                                    target="_blank" class="btn btn-outline-primary btn-sm mt-2"><i
+                                        class="bi bi-map"></i> Ver en Mapa</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>

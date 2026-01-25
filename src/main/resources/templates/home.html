@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <!-- Hero Section -->
+    <!-- Hero Section -->
+    <header class="hero-section"
+        th:style="'background: linear-gradient(rgba(242, 101, 34, 0.6), rgba(51, 51, 51, 0.9)), url(' + ${heroImageUrl} + '); background-size: cover; background-position: center;'">
+        <div class="container">
+            <h1 class="display-3 fw-bold">Universidad Popular de Misiones</h1>
+            <p class="lead mb-4">Formando a los líderes del mañana con excelencia académica, investigación de vanguardia
+                y compromiso social.</p>
+            <a class="btn btn-primary-custom btn-lg" href="/courses">Explorar Oferta Académica</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Features Section -->
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="row g-4 text-center">
+                    <div class="col-md-4">
+                        <div class="card card-hover h-100 p-4">
+                            <i class="bi bi-award text-primary display-4 mb-3"></i>
+                            <h4>Excelencia Académica</h4>
+                            <p class="text-muted">Programas acreditados internacionalmente y cuerpo docente de primer
+                                nivel.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-hover h-100 p-4">
+                            <i class="bi bi-laptop text-primary display-4 mb-3"></i>
+                            <h4>Innovación Tecnológica</h4>
+                            <p class="text-muted">Campus inteligente y laboratorios equipados con última tecnología.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-hover h-100 p-4">
+                            <i class="bi bi-globe-americas text-primary display-4 mb-3"></i>
+                            <h4>Visión Global</h4>
+                            <p class="text-muted">Convenios de intercambio con universidades líderes en todo el mundo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest News & Courses Grid -->
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <!-- News -->
+                    <div class="col-lg-6 mb-5">
+                        <h2 class="section-title">Últimas Noticias</h2>
+                        <div class="card shadow-sm border-0 mb-3" th:each="n : ${news}">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img th:if="${n.imageUrl != null && !n.imageUrl.isEmpty()}" th:src="${n.imageUrl}"
+                                        class="img-fluid rounded-start h-100 w-100"
+                                        style="object-fit: cover; min-height: 100px;" alt="Imagen Noticia">
+                                    <div th:unless="${n.imageUrl != null && !n.imageUrl.isEmpty()}"
+                                        class="bg-secondary text-white d-flex align-items-center justify-content-center h-100 rounded-start"
+                                        style="min-height: 100px;">
+                                        <i class="bi bi-newspaper display-6"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title fw-bold" th:text="${n.title}">Título</h5>
+                                        <p class="card-text small text-muted"><i class="bi bi-calendar-event me-1"></i>
+                                            <span th:text="${n.eventDate}">Fecha</span>
+                                        </p>
+                                        <a th:href="@{/news/{id}(id=${n.id})}"
+                                            class="stretched-link text-decoration-none">Leer más</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="/news" class="btn btn-outline-primary">Ver todas las noticias</a>
+                        </div>
+                    </div>
+
+                    <!-- Courses -->
+                    <div class="col-lg-6">
+                        <h2 class="section-title">Cursos Destacados</h2>
+                        <div class="row row-cols-1 g-3">
+                            <div class="col" th:each="c : ${courses}">
+                                <div class="card shadow-sm h-100 border-0">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col-4">
+                                            <div th:if="${c.imageUrl != null && !c.imageUrl.isEmpty()}"
+                                                th:style="'height: 100px; background-image: url(' + ${c.imageUrl} + '); background-size: cover; background-position: center; border-radius: 5px 0 0 5px;'">
+                                            </div>
+                                            <div th:unless="${c.imageUrl != null && !c.imageUrl.isEmpty()}"
+                                                class="bg-secondary text-white d-flex align-items-center justify-content-center"
+                                                style="height: 100px; border-radius: 5px 0 0 5px;">
+                                                <i class="bi bi-book-half display-6 opacity-50"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="card-body py-2">
+                                                <h5 class="card-title fw-bold mb-1 text-truncate" th:text="${c.title}">
+                                                    Curso</h5>
+                                                <span class="badge bg-light text-dark border mb-2"
+                                                    th:text="${c.modality}">Modalidad</span>
+                                                <a th:href="@{/courses/{id}(id=${c.id})}" class="stretched-link"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="/courses" class="btn btn-primary-custom">Ver catálogo completo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Student Life Section -->
+        <section class="py-5 text-white"
+            style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/students_collaborating.png') center/cover fixed;">
+            <div class="container text-center py-5">
+                <h2 class="display-4 fw-bold mb-4">Vida Universitaria</h2>
+                <p class="lead mb-5">Más allá de las aulas, te esperamos con deportes, cultura y comunidad.</p>
+                <a href="/contact" class="btn btn-outline-light btn-lg px-5">Únete a nosotros</a>
+            </div>
+        </section>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>
