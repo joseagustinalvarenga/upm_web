@@ -7,6 +7,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class InstitutionalApplication {
 
 	public static void main(String[] args) {
+		String dbUrl = System.getenv("DATABASE_URL");
+		if (dbUrl != null && !dbUrl.isEmpty()) {
+			// Railway fix: Ensure JDBC prefix
+			if (!dbUrl.startsWith("jdbc:")) {
+				if (dbUrl.startsWith("postgres://")) {
+					dbUrl = dbUrl.replace("postgres://", "jdbc:postgresql://");
+				} else if (dbUrl.startsWith("postgresql://")) {
+					dbUrl = dbUrl.replace("postgresql://", "jdbc:postgresql://");
+				}
+				System.setProperty("SPRING_DATASOURCE_URL", dbUrl);
+			}
+		}
 		SpringApplication.run(InstitutionalApplication.class, args);
 	}
 
