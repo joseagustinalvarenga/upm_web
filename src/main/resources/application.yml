@@ -6,37 +6,39 @@ spring:
     name: institutional
 
   datasource:
-    url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL:${DATABASE_URL}}
+    username: ${SPRING_DATASOURCE_USERNAME:${PGUSER}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${PGPASSWORD}}
 
     hikari:
       pool-name: HikariPool-1
-      maximum-pool-size: 10
-      minimum-idle: 2
-      connection-timeout: 30000
-      validation-timeout: 5000
-      idle-timeout: 600000
-      max-lifetime: 1800000
-      keepalive-time: 300000
+      maximum-pool-size: ${DB_POOL_MAX:10}
+      minimum-idle: ${DB_POOL_MIN_IDLE:2}
+      connection-timeout: ${DB_CONN_TIMEOUT_MS:30000}
+      validation-timeout: ${DB_VALIDATION_TIMEOUT_MS:5000}
+      idle-timeout: ${DB_IDLE_TIMEOUT_MS:600000}
+      max-lifetime: ${DB_MAX_LIFETIME_MS:1800000}
+      keepalive-time: ${DB_KEEPALIVE_MS:300000}
+      data-source-properties:
+        connectTimeout: ${PG_CONNECT_TIMEOUT_SEC:10}
+        socketTimeout: ${PG_SOCKET_TIMEOUT_SEC:30}
+        tcpKeepAlive: true
 
   jpa:
     open-in-view: false
     hibernate:
       ddl-auto: none
-    properties:
-      hibernate:
-        format_sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
     enabled: true
     baseline-on-migrate: true
-    connect-retries: 10
-    connect-retries-interval: 5
+    connect-retries: ${FLYWAY_CONNECT_RETRIES:10}
+    connect-retries-interval: ${FLYWAY_RETRY_INTERVAL_SEC:5}
 
 logging:
   level:
     root: INFO
     org.flywaydb: INFO
     com.zaxxer.hikari: INFO
-    org.hibernate.SQL: WARN
