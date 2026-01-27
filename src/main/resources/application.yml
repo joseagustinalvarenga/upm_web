@@ -37,6 +37,18 @@ spring:
     connect-retries: ${FLYWAY_CONNECT_RETRIES:10}
     connect-retries-interval: ${FLYWAY_RETRY_INTERVAL_SEC:5}
 
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:25}
+    username: ${MAIL_USERNAME:not-configured}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
 logging:
   level:
     root: INFO
