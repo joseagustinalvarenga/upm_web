@@ -60,6 +60,7 @@ h6 {
     color: white;
     padding: 150px 0;
     text-align: center;
+    margin-top: -80px; /* Elimina la franja blanca causada por el padding-top del body */
 }
 
 .hero-section h1 {
