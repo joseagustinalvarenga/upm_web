@@ -34,6 +34,8 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+    validate-on-migrate: false
+    out-of-order: true
     connect-retries: ${FLYWAY_CONNECT_RETRIES:10}
     connect-retries-interval: ${FLYWAY_RETRY_INTERVAL_SEC:5}
 
