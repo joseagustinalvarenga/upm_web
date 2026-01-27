@@ -38,7 +38,8 @@
         </div>
 
         <div class="mt-4">
-            <a href="/contact" class="btn btn-lg btn-warning">Consultar por este curso</a>
+            <a th:href="@{/contact(subject='Información sobre curso: ' + ${course.title})}"
+                class="btn btn-lg btn-warning">Consultar por este curso</a>
         </div>
     </main>
 

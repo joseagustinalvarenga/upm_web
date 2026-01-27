@@ -89,8 +89,14 @@ public class PublicController {
     }
 
     @GetMapping("/contact")
-    public String contactForm(Model model) {
-        model.addAttribute("contactForm", new ContactForm());
+    public String contactForm(@RequestParam(required = false) String subject, Model model) {
+        ContactForm form = new ContactForm();
+        if (subject != null && !subject.isEmpty()) {
+            form.setSubject(subject);
+            form.setMessage("Hola, deseo recibir más información sobre el curso: "
+                    + subject.replace("Información sobre curso: ", "") + ". Muchas gracias.");
+        }
+        model.addAttribute("contactForm", form);
         return "contact/form";
     }
 
