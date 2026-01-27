@@ -12,14 +12,36 @@ public class InstitutionalApplication {
 		System.out.println("🔍 DEBUG: DATABASE_URL ENV = " + (dbUrl != null ? "FOUND" : "NOT FOUND"));
 
 		if (dbUrl != null && !dbUrl.isEmpty()) {
-			if (!dbUrl.startsWith("jdbc:")) {
-				if (dbUrl.startsWith("postgres://")) {
-					dbUrl = dbUrl.replace("postgres://", "jdbc:postgresql://");
-				} else if (dbUrl.startsWith("postgresql://")) {
-					dbUrl = dbUrl.replace("postgresql://", "jdbc:postgresql://");
+			try {
+				// URI no acepta jdbc: al inicio para parsear componentes
+				String cleanDbUrl = dbUrl.replace("jdbc:", "");
+				java.net.URI uri = new java.net.URI(cleanDbUrl);
+
+				String host = uri.getHost();
+				int port = uri.getPort();
+				String path = uri.getPath();
+				String query = uri.getQuery();
+
+				String jdbcUrl = "jdbc:postgresql://" + host + (port != -1 ? ":" + port : "") + path;
+				if (query != null && !query.isEmpty()) {
+					jdbcUrl += "?" + query;
 				}
-				System.setProperty("SPRING_DATASOURCE_URL", dbUrl);
-				System.out.println("✅ DEBUG: JDBC URL PATCHED AND SET IN SYSTEM PROPERTY");
+
+				System.setProperty("SPRING_DATASOURCE_URL", jdbcUrl);
+
+				if (uri.getUserInfo() != null) {
+					String[] userInfo = uri.getUserInfo().split(":");
+					System.setProperty("SPRING_DATASOURCE_USERNAME", userInfo[0]);
+					if (userInfo.length > 1) {
+						System.setProperty("SPRING_DATASOURCE_PASSWORD", userInfo[1]);
+					}
+				}
+
+				System.out.println("✅ JDBC URL DECOMPOSED: " + jdbcUrl);
+				System.out.println("✅ USERNAME EXTRACTED: " + (uri.getUserInfo() != null ? "YES" : "NO"));
+
+			} catch (Exception e) {
+				System.err.println("❌ Error parsing DATABASE_URL: " + e.getMessage());
 			}
 		}
 		SpringApplication.run(InstitutionalApplication.class, args);
