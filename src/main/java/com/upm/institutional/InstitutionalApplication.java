@@ -63,4 +63,35 @@ public class InstitutionalApplication {
 		};
 	}
 
+	@org.springframework.context.annotation.Bean
+	public org.springframework.boot.CommandLineRunner initFeatures(
+			com.upm.institutional.repository.FeatureRepository featureRepository) {
+		return args -> {
+			if (featureRepository.count() == 0) {
+				com.upm.institutional.model.Feature f1 = new com.upm.institutional.model.Feature();
+				f1.setTitle("Excelencia Académica");
+				f1.setIcon("bi-award");
+				f1.setDescription("Programas acreditados internacionalmente y cuerpo docente de primer nivel.");
+				f1.setDisplayOrder(1);
+				featureRepository.save(f1);
+
+				com.upm.institutional.model.Feature f2 = new com.upm.institutional.model.Feature();
+				f2.setTitle("Innovación Tecnológica");
+				f2.setIcon("bi-laptop");
+				f2.setDescription("Campus inteligente y laboratorios equipados con última tecnología.");
+				f2.setDisplayOrder(2);
+				featureRepository.save(f2);
+
+				com.upm.institutional.model.Feature f3 = new com.upm.institutional.model.Feature();
+				f3.setTitle("Visión Global");
+				f3.setIcon("bi-globe-americas");
+				f3.setDescription("Convenios de intercambio con universidades líderes en todo el mundo.");
+				f3.setDisplayOrder(3);
+				featureRepository.save(f3);
+
+				System.out.println("✅ INITIAL FEATURES CREATED");
+			}
+		};
+	}
+
 }

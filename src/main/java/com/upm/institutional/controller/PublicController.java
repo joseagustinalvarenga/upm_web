@@ -32,6 +32,7 @@ public class PublicController {
     private final com.upm.institutional.service.SiteSettingService siteSettingService;
     private final com.upm.institutional.service.SedeService sedeService;
     private final com.upm.institutional.service.ProfessionalService professionalService;
+    private final com.upm.institutional.service.FeatureService featureService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -47,6 +48,8 @@ public class PublicController {
         String heroImageUrl = siteSettingService.getSetting("home_hero_image_url",
                 "/images/university_campus_hero.png");
         model.addAttribute("heroImageUrl", heroImageUrl);
+
+        model.addAttribute("features", featureService.findAllFeatures());
 
         return "home";
     }
