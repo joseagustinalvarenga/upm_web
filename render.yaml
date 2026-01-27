@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: upm-institutional
+    env: java
+    buildCommand: mvn clean package -DskipTests
+    startCommand: java -jar target/institutional-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://postgres:WNIQiipxqCEnxRkLGhvjOLYqwyiDjvJu@metro.proxy.rlwy.net:26126/railway?sslmode=require
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://metro.proxy.rlwy.net:26126/railway?sslmode=require
+      - key: SPRING_DATASOURCE_USERNAME
+        value: postgres
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: WNIQiipxqCEnxRkLGhvjOLYqwyiDjvJu
+      - key: PORT
+        value: 10000

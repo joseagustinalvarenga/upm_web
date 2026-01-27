@@ -7,4 +7,4 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jdk
 
 COPY --from=build /app/target/*.jar app.jar
-ENTRYPOINT ["java", "-Djava.net.preferIPv4Stack=true", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
