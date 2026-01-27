@@ -9,6 +9,8 @@ public class InstitutionalApplication {
 	public static void main(String[] args) {
 		// Fix Railway/Heroku JDBC URL format (postgres:// -> jdbc:postgresql://)
 		String dbUrl = System.getenv("DATABASE_URL");
+		System.out.println("🔍 DEBUG: DATABASE_URL ENV = " + (dbUrl != null ? "FOUND" : "NOT FOUND"));
+
 		if (dbUrl != null && !dbUrl.isEmpty()) {
 			if (!dbUrl.startsWith("jdbc:")) {
 				if (dbUrl.startsWith("postgres://")) {
@@ -17,6 +19,7 @@ public class InstitutionalApplication {
 					dbUrl = dbUrl.replace("postgresql://", "jdbc:postgresql://");
 				}
 				System.setProperty("SPRING_DATASOURCE_URL", dbUrl);
+				System.out.println("✅ DEBUG: JDBC URL PATCHED AND SET IN SYSTEM PROPERTY");
 			}
 		}
 		SpringApplication.run(InstitutionalApplication.class, args);

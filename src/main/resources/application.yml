@@ -7,9 +7,9 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME:${PGUSER}}
-    password: ${SPRING_DATASOURCE_PASSWORD:${PGPASSWORD}}
+    url: ${SPRING_DATASOURCE_URL:${DATABASE_URL:}}
+    username: ${SPRING_DATASOURCE_USERNAME:${PGUSER:}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${PGPASSWORD:}}
 
     hikari:
       pool-name: HikariPool-1
