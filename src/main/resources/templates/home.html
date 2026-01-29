@@ -102,21 +102,20 @@
                         <div class="row row-cols-1 g-3">
                             <div class="col" th:each="c : ${courses}">
                                 <div class="card shadow-sm h-100 border-0">
-                                    <div class="row g-0 align-items-center">
+                                    <div class="row g-0">
                                         <div class="col-4">
-                                            <div th:if="${c.imageUrl != null && !c.imageUrl.isEmpty()}"
-                                                th:style="'height: 100px; background-image: url(' + ${c.imageUrl} + '); background-size: cover; background-position: center; border-radius: 5px 0 0 5px;'">
-                                            </div>
+                                            <img th:if="${c.imageUrl != null && !c.imageUrl.isEmpty()}"
+                                                th:src="${c.imageUrl}" class="img-fluid rounded-start h-100 w-100"
+                                                style="object-fit: cover; min-height: 100px;" alt="Imagen Curso">
                                             <div th:unless="${c.imageUrl != null && !c.imageUrl.isEmpty()}"
-                                                class="bg-secondary text-white d-flex align-items-center justify-content-center"
-                                                style="height: 100px; border-radius: 5px 0 0 5px;">
+                                                class="bg-secondary text-white d-flex align-items-center justify-content-center h-100 rounded-start"
+                                                style="min-height: 100px;">
                                                 <i class="bi bi-book-half display-6 opacity-50"></i>
                                             </div>
                                         </div>
                                         <div class="col-8">
-                                            <div class="card-body py-2">
-                                                <h5 class="card-title fw-bold mb-1 text-truncate" th:text="${c.title}">
-                                                    Curso</h5>
+                                            <div class="card-body">
+                                                <h5 class="card-title fw-bold mb-1" th:text="${c.title}">Curso</h5>
                                                 <span class="badge bg-light text-dark border mb-2"
                                                     th:text="${c.modality}">Modalidad</span>
                                                 <a th:href="@{/courses/{id}(id=${c.id})}" class="stretched-link"></a>
