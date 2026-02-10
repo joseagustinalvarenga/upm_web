@@ -53,12 +53,17 @@ public class InstitutionalApplication {
 			org.springframework.security.crypto.password.PasswordEncoder passwordEncoder) {
 		return args -> {
 			com.upm.institutional.model.User admin = userRepository.findByUsername("admin").orElse(null);
-			if (admin != null) {
+			if (admin == null) {
+				admin = new com.upm.institutional.model.User();
+				admin.setUsername("admin");
+				// Email field not present in User entity, so we skip it
+				admin.setRole(com.upm.institutional.model.Role.ADMIN);
 				admin.setPasswordHash(passwordEncoder.encode("admin1234"));
 				userRepository.save(admin);
-				System.out.println("ADMIN PASSWORD RESET TO: admin1234");
+				System.out.println("✅ ADMIN USER CREATED: admin / admin1234");
 			} else {
-				System.out.println("ADMIN USER NOT FOUND IN DB");
+				// Do not reset password if user already exists in production
+				System.out.println("✅ ADMIN USER FOUND (Password unchanged)");
 			}
 		};
 	}

@@ -6,6 +6,7 @@ import com.upm.institutional.model.News;
 import com.upm.institutional.service.ContactService;
 import com.upm.institutional.service.CourseService;
 import com.upm.institutional.service.NewsService;
+import com.upm.institutional.service.AcademicOfferService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,7 @@ public class PublicController {
     private final com.upm.institutional.service.SedeService sedeService;
     private final com.upm.institutional.service.ProfessionalService professionalService;
     private final com.upm.institutional.service.FeatureService featureService;
+    private final AcademicOfferService academicOfferService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -65,6 +67,17 @@ public class PublicController {
         Page<Course> courses = courseService.findPublishedCourses(pageable);
         model.addAttribute("courses", courses);
         return "courses/list";
+    }
+
+    @GetMapping("/academic-offer")
+    public String academicOffer(Model model,
+            @RequestParam(required = false) String area,
+            @RequestParam(required = false) String query) {
+        model.addAttribute("offers", academicOfferService.search(area, query));
+        model.addAttribute("areas", academicOfferService.findDistinctAreas());
+        model.addAttribute("currentArea", area);
+        model.addAttribute("currentQuery", query);
+        return "academic-offer";
     }
 
     @GetMapping("/courses/{id}")

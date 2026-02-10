@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <!-- Page Header -->
+    <div class="bg-light py-5 mb-5 border-bottom">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Cursos 2026</h1>
+            <p class="lead text-muted">Consulta nuestra lista completa de cursos y talleres disponibles.</p>
+        </div>
+    </div>
+
+    <main class="container">
+
+        <!-- Search and Filter -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <form th:action="@{/academic-offer}" method="get" class="row g-3">
+                    <div class="col-md-4">
+                        <select class="form-select" name="area" onchange="this.form.submit()">
+                            <option value="">Todas las Áreas</option>
+                            <option th:each="a : ${areas}" th:value="${a}" th:text="${a}"
+                                th:selected="${a == currentArea}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" name="query" placeholder="Buscar por curso..."
+                            th:value="${currentQuery}">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary-custom w-100">Buscar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Upload Section -->
+        <div class="mb-4" sec:authorize="hasRole('ADMIN')">
+            <div class="card border-info">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="bi bi-cloud-upload me-2"></i>Administración: Cargar Oferta Académica</h5>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/admin/academic-offer/upload}" method="post" enctype="multipart/form-data"
+                        class="row align-items-center">
+                        <div class="col-auto">
+                            <label for="file" class="form-label">Subir archivo Excel (.xlsx):</label>
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-control" type="file" id="file" name="file" accept=".xlsx" required>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Cargar</button>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <small class="text-muted">El archivo debe tener las columnas: Área, Curso, Cantidad de
+                                Clases (en ese orden).</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+
+        <!-- Table -->
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Área</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col" class="text-center">Duración / Clases</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="offer : ${offers}">
+                        <td th:text="${offer.area}">Área</td>
+                        <td class="fw-bold" th:text="${offer.course}">Curso</td>
+                        <td class="text-center">
+                            <span class="badge bg-secondary rounded-pill" th:text="${offer.classCount}">Clases</span>
+                        </td>
+                    </tr>
+                    <tr th:if="${offers.empty}">
+                        <td colspan="3" class="text-center py-4 text-muted">
+                            <i class="bi bi-search display-6 d-block mb-3"></i>
+                            No se encontraron cursos con los criterios seleccionados.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="my-5"></div>
+
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>

@@ -38,6 +38,7 @@ public class SecurityConfig {
                                                                 "/sedes",
                                                                 "/professionals",
                                                                 "/professionals/**",
+                                                                "/academic-offer",
                                                                 "/error")
                                                 .permitAll()
                                                 .requestMatchers("/admin/**").hasRole("ADMIN")
