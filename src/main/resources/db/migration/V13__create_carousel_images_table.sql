@@ -1,0 +1,5 @@
+CREATE TABLE carousel_images (
+    id BIGSERIAL PRIMARY KEY,
+    image_data TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

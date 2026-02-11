@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Gestión de Imágenes del Carrusel</h4>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+                        <div class="mb-5">
+                            <h5 class="card-title fw-bold mb-3">Subir Nueva Imagen</h5>
+                            <form th:action="@{/admin/carousel/upload}" method="post" enctype="multipart/form-data"
+                                class="row g-3 align-items-end">
+                                <div class="col-auto flex-grow-1">
+                                    <label for="imageFile" class="form-label">Seleccionar imagen</label>
+                                    <input class="form-control" type="file" id="imageFile" name="imageFile"
+                                        accept="image/*" required>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-success"><i
+                                            class="bi bi-cloud-upload me-2"></i>Subir</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <hr>
+
+                        <h5 class="card-title fw-bold mb-3">Imágenes Actuales</h5>
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            <div class="col" th:each="img : ${images}">
+                                <div class="card h-100">
+                                    <img th:src="${img.imageData}" class="card-img-top" alt="Imagen Carrusel"
+                                        style="height: 200px; object-fit: cover;">
+                                    <div class="card-body text-center">
+                                        <p class="card-text small text-muted">Subida el: <span
+                                                th:text="${#temporals.format(img.createdAt, 'dd/MM/yyyy HH:mm')}">Fecha</span>
+                                        </p>
+                                        <form th:action="@{/admin/carousel/delete/{id}(id=${img.id})}" method="post"
+                                            onsubmit="return confirm('¿Estás seguro de eliminar esta imagen?');">
+                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                                    class="bi bi-trash me-2"></i>Eliminar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col" th:if="${images.empty}">
+                                <div class="alert alert-info py-4 text-center">
+                                    No hay imágenes subidas. Se mostrarán las imágenes por defecto en el sitio.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-center">
+                            <a href="/admin/dashboard" class="btn btn-outline-secondary">Volver al Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>

@@ -31,6 +31,7 @@ public class PublicController {
     private final NewsService newsService;
     private final ContactService contactService;
     private final com.upm.institutional.service.SiteSettingService siteSettingService;
+    private final com.upm.institutional.service.CarouselImageService carouselImageService;
     private final com.upm.institutional.service.SedeService sedeService;
     private final com.upm.institutional.service.ProfessionalService professionalService;
     private final com.upm.institutional.service.FeatureService featureService;
@@ -52,19 +53,15 @@ public class PublicController {
         model.addAttribute("heroImageUrl", heroImageUrl);
 
         // Carousel Images
-        String carouselImagesStr = siteSettingService.getSetting("home_carousel_images", "");
+        java.util.List<com.upm.institutional.model.CarouselImage> dbImages = carouselImageService.findAll();
         java.util.List<String> carouselImages = new java.util.ArrayList<>();
 
-        if (carouselImagesStr != null && !carouselImagesStr.isEmpty()) {
-            String[] images = carouselImagesStr.split(",");
-            for (String img : images) {
-                if (!img.trim().isEmpty()) {
-                    carouselImages.add(img.trim());
-                }
+        if (!dbImages.isEmpty()) {
+            for (com.upm.institutional.model.CarouselImage img : dbImages) {
+                carouselImages.add(img.getImageData());
             }
-        }
-
-        if (carouselImages.isEmpty()) {
+        } else {
+            // Fallback to defaults if no images in DB
             carouselImages.add(
                     "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop");
             carouselImages.add(
@@ -72,6 +69,7 @@ public class PublicController {
             carouselImages.add(
                     "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop");
         }
+
         model.addAttribute("carouselImages", carouselImages);
 
         model.addAttribute("features", featureService.findAllFeatures());
