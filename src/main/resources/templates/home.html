@@ -133,10 +133,36 @@
             </div>
         </section>
 
-        <!-- Student Life Section -->
-        <section class="py-5 text-white"
-            style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/images/students_collaborating.png') center/cover fixed;">
-            <div class="container text-center py-5">
+        <!-- Student Life Section with Carousel -->
+        <section class="position-relative py-5 text-white overflow-hidden">
+            <!-- Background Carousel -->
+            <div id="studentLifeCarousel"
+                class="carousel slide carousel-fade position-absolute top-0 start-0 w-100 h-100" data-bs-ride="carousel"
+                style="z-index: -1;">
+                <div class="carousel-inner h-100">
+                    <div class="carousel-item active h-100">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop"
+                            class="d-block w-100 h-100" alt="Estudiantes" style="object-fit: cover;">
+                        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.6);">
+                        </div>
+                    </div>
+                    <div class="carousel-item h-100">
+                        <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop"
+                            class="d-block w-100 h-100" alt="Campus" style="object-fit: cover;">
+                        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.6);">
+                        </div>
+                    </div>
+                    <div class="carousel-item h-100">
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop"
+                            class="d-block w-100 h-100" alt="Clases" style="object-fit: cover;">
+                        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.6);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="container text-center py-5 position-relative" style="z-index: 1;">
                 <h2 class="display-4 fw-bold mb-4">Vida Universitaria</h2>
                 <p class="lead mb-5">Más allá de las aulas, te esperamos con deportes, cultura y comunidad.</p>
                 <a href="/contact" class="btn btn-outline-light btn-lg px-5">Únete a nosotros</a>
