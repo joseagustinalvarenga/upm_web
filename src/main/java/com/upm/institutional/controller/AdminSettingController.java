@@ -22,13 +22,23 @@ public class AdminSettingController {
         String currentHeroImage = siteSettingService.getSetting("home_hero_image_url",
                 "/images/university_campus_hero.png");
         model.addAttribute("heroImageUrl", currentHeroImage);
+
+        String carouselImages = siteSettingService.getSetting("home_carousel_images", "");
+        model.addAttribute("carouselImages", carouselImages);
+
         return "admin/settings/form";
     }
 
     @PostMapping
     public String updateSettings(@RequestParam("heroImageUrl") String heroImageUrl,
+            @RequestParam(value = "carouselImages", required = false) String carouselImages,
             RedirectAttributes redirectAttributes) {
         siteSettingService.updateSetting("home_hero_image_url", heroImageUrl);
+
+        if (carouselImages != null) {
+            siteSettingService.updateSetting("home_carousel_images", carouselImages);
+        }
+
         redirectAttributes.addFlashAttribute("success", "Configuración actualizada correctamente.");
         return "redirect:/admin/settings";
     }

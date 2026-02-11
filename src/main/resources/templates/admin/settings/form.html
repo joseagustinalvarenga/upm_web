@@ -28,6 +28,16 @@
                                     Puedes usar una URL externa o local (ej: /images/mi-imagen.png).</div>
                             </div>
 
+                            <div class="mb-4">
+                                <label for="carouselImages" class="form-label fw-bold">Imágenes del Carrusel (Separa por
+                                    comas)</label>
+                                <textarea class="form-control" id="carouselImages" name="carouselImages" rows="3"
+                                    th:text="${carouselImages}"></textarea>
+                                <div class="form-text">Ingresa las URLs de las imágenes que quieres mostrar en el
+                                    carrusel de "Vida Universitaria", separadas por comas.
+                                    Si lo dejas vacío, se usarán imágenes por defecto.</div>
+                            </div>
+
                             <!-- Preview -->
                             <div class="mb-4 text-center">
                                 <label class="form-label text-muted small">Vista Previa Actual</label>
