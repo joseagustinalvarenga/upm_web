@@ -1,0 +1,1 @@
+ALTER TABLE courses ALTER COLUMN image_url TYPE TEXT;

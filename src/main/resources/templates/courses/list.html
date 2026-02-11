@@ -20,7 +20,8 @@
                 <div class="card card-hover h-100">
                     <!-- Image -->
                     <div th:if="${course.imageUrl != null && !course.imageUrl.isEmpty()}" class="card-img-top"
-                        th:style="'height: 200px; background-image: url(' + ${course.imageUrl} + '); background-size: cover; background-position: center;'">
+                        th:style="'height: 200px; background-image: url(' + ${course.imageUrl} + '); background-size: cover; background-position: center;'"
+                        referrerpolicy="no-referrer">
                     </div>
                     <div th:unless="${course.imageUrl != null && !course.imageUrl.isEmpty()}"
                         class="bg-secondary text-white d-flex align-items-center justify-content-center"

@@ -37,7 +37,7 @@ public class Course {
     @Column(nullable = false)
     private Status status = Status.DRAFT;
 
-    @Column(name = "image_url")
+    @Column(name = "image_url", columnDefinition = "TEXT")
     private String imageUrl;
 
     @CreationTimestamp

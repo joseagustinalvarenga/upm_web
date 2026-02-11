@@ -6,10 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class InstitutionalApplication {
 
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InstitutionalApplication.class);
+
 	public static void main(String[] args) {
 		// Fix Railway/Heroku JDBC URL format (postgres:// -> jdbc:postgresql://)
 		String dbUrl = System.getenv("DATABASE_URL");
-		System.out.println("🔍 DEBUG: DATABASE_URL ENV = " + (dbUrl != null ? "FOUND" : "NOT FOUND"));
+		log.info("🔍 DEBUG: DATABASE_URL ENV = {}", (dbUrl != null ? "FOUND" : "NOT FOUND"));
 
 		if (dbUrl != null && !dbUrl.isEmpty()) {
 			try {
@@ -37,11 +39,11 @@ public class InstitutionalApplication {
 					}
 				}
 
-				System.out.println("✅ JDBC URL DECOMPOSED: " + jdbcUrl);
-				System.out.println("✅ USERNAME EXTRACTED: " + (uri.getUserInfo() != null ? "YES" : "NO"));
+				log.info("✅ JDBC URL DECOMPOSED: {}", jdbcUrl);
+				log.info("✅ USERNAME EXTRACTED: {}", (uri.getUserInfo() != null ? "YES" : "NO"));
 
 			} catch (Exception e) {
-				System.err.println("❌ Error parsing DATABASE_URL: " + e.getMessage());
+				log.error("❌ Error parsing DATABASE_URL: {}", e.getMessage());
 			}
 		}
 		SpringApplication.run(InstitutionalApplication.class, args);
@@ -60,10 +62,10 @@ public class InstitutionalApplication {
 				admin.setRole(com.upm.institutional.model.Role.ADMIN);
 				admin.setPasswordHash(passwordEncoder.encode("admin1234"));
 				userRepository.save(admin);
-				System.out.println("✅ ADMIN USER CREATED: admin / admin1234");
+				log.info("✅ ADMIN USER CREATED: admin / admin1234");
 			} else {
 				// Do not reset password if user already exists in production
-				System.out.println("✅ ADMIN USER FOUND (Password unchanged)");
+				log.info("✅ ADMIN USER FOUND (Password unchanged)");
 			}
 		};
 	}
@@ -95,7 +97,7 @@ public class InstitutionalApplication {
 					f3.setDisplayOrder(3);
 					featureRepository.save(f3);
 
-					System.out.println("✅ INITIAL FEATURES CREATED");
+					log.info("✅ INITIAL FEATURES CREATED");
 				}
 			} catch (Exception e) {
 				System.err.println(

@@ -18,7 +18,7 @@
         <div th:if="${course.imageUrl != null && !course.imageUrl.isEmpty()}"
             class="mb-4 rounded shadow-sm overflow-hidden" style="max-height: 400px;">
             <img th:src="${course.imageUrl}" class="w-100" style="object-fit: cover; object-position: center;"
-                alt="Imagen del curso">
+                alt="Imagen del curso" referrerpolicy="no-referrer">
         </div>
 
         <h1 class="display-4" th:text="${course.title}">Título Curso</h1>

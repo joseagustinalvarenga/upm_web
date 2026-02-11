@@ -34,4 +34,6 @@ public class CourseDto {
     private Status status;
 
     private String imageUrl;
+
+    private org.springframework.web.multipart.MultipartFile imageFile;
 }
