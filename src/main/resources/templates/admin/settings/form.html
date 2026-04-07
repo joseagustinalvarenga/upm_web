@@ -16,16 +16,16 @@
                     <div class="card-body">
                         <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
 
-                        <form th:action="@{/admin/settings}" method="post">
+                        <form th:action="@{/admin/settings}" method="post" enctype="multipart/form-data">
                             <div class="mb-4">
-                                <label for="heroImageUrl" class="form-label fw-bold">URL Imagen Principal (Home)</label>
+                                <label for="heroImageFile" class="form-label fw-bold">Imagen Principal (Home)</label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-image"></i></span>
-                                    <input type="text" class="form-control" id="heroImageUrl" name="heroImageUrl"
-                                        th:value="${heroImageUrl}" required>
+                                    <span class="input-group-text"><i class="bi bi-cloud-upload"></i></span>
+                                    <input type="file" class="form-control" id="heroImageFile" name="heroImageFile"
+                                        accept="image/*">
                                 </div>
-                                <div class="form-text">Esta imagen aparecerá en el encabezado de la página de inicio.
-                                    Puedes usar una URL externa o local (ej: /images/mi-imagen.png).</div>
+                                <div class="form-text">Sube una imagen desde tu PC para la cabecera. Si no seleccionas
+                                    ninguna, se mantendrá la actual.</div>
                             </div>
 
                             <div class="mb-4">

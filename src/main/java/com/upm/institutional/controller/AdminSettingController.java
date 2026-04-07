@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.util.Base64;
 
 @Controller
 @RequestMapping("/admin/settings")
@@ -30,10 +32,21 @@ public class AdminSettingController {
     }
 
     @PostMapping
-    public String updateSettings(@RequestParam("heroImageUrl") String heroImageUrl,
+    public String updateSettings(@RequestParam(value = "heroImageFile", required = false) MultipartFile heroImageFile,
             @RequestParam(value = "carouselImages", required = false) String carouselImages,
             RedirectAttributes redirectAttributes) {
-        siteSettingService.updateSetting("home_hero_image_url", heroImageUrl);
+        
+        if (heroImageFile != null && !heroImageFile.isEmpty()) {
+            try {
+                String base64Image = Base64.getEncoder().encodeToString(heroImageFile.getBytes());
+                String mimeType = heroImageFile.getContentType();
+                String dataUrl = "data:" + mimeType + ";base64," + base64Image;
+                siteSettingService.updateSetting("home_hero_image_url", dataUrl);
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("error", "Error al procesar la imagen: " + e.getMessage());
+                return "redirect:/admin/settings";
+            }
+        }
 
         if (carouselImages != null) {
             siteSettingService.updateSetting("home_carousel_images", carouselImages);
