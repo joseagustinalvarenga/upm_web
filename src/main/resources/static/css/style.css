@@ -181,28 +181,19 @@ h6 {
     text-decoration: none;
 }
 
-/* Developer Watermark */
-.dev-watermark {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 150px;
-    opacity: 0.25;
-    z-index: 999;
-    pointer-events: none;
+/* Footer Developer Logo */
+.footer-dev-logo {
+    display: inline-block;
+    max-width: 130px;
+    opacity: 0.15;
+    vertical-align: middle;
+    margin-top: 10px;
+    filter: grayscale(1);
+    transition: opacity 0.3s, filter 0.3s;
     user-select: none;
-    transition: opacity 0.3s ease;
 }
 
-.dev-watermark:hover {
-    opacity: 0.6;
-}
-
-@media (max-width: 768px) {
-    .dev-watermark {
-        width: 100px;
-        bottom: 10px;
-        left: 10px;
-        opacity: 0.15;
-    }
+.footer-dev-logo:hover {
+    opacity: 0.5;
+    filter: grayscale(0);
 }
