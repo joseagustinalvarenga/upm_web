@@ -17,5 +17,6 @@ public class SiteSetting {
     @Id
     private String settingKey;
 
+    @jakarta.persistence.Column(columnDefinition = "LONGTEXT")
     private String settingValue;
 }
