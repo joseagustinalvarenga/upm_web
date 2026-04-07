@@ -1,0 +1,20 @@
+{
+  "name": "Universidad Popular de Misiones",
+  "short_name": "UPM",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F26522",
+  "theme_color": "#F26522"
+}
