@@ -4,6 +4,46 @@
 <head th:replace="~{fragments/header :: head}"></head>
 
 <body>
+    <!-- Preloader / Splash Screen -->
+    <div id="preloader">
+        <svg class="preloader-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Book Pages body -->
+            <path class="preloader-path-filled" d="M15,70 L50,85 L85,70 L85,40 L50,55 L15,40 Z" />
+            <!-- Book Pages left -->
+            <path class="preloader-path" d="M50,85 L15,70 L15,40 L50,55 Z" />
+            <!-- Book Pages right -->
+            <path class="preloader-path" d="M50,85 L85,70 L85,40 L50,55 Z" />
+            <!-- Book Pages lines left -->
+            <path class="preloader-path" d="M15,50 L50,65 M15,60 L50,75" />
+            <!-- Book Pages lines right -->
+            <path class="preloader-path" d="M85,50 L50,65 M85,60 L50,75" />
+            
+            <!-- Graduation Cap Top -->
+            <path class="preloader-path" d="M50,10 L15,25 L50,40 L85,25 Z" />
+            <path class="preloader-path-filled" d="M50,10 L15,25 L50,40 L85,25 Z" />
+            <!-- Cap details (Tassel) -->
+            <path class="preloader-path" d="M50,25 L85,40 L85,50" />
+            <!-- Cap base -->
+            <path class="preloader-path" d="M35,33 L35,48 C35,55 65,55 65,48 L65,33" />
+        </svg>
+        <div class="preloader-text">UPM</div>
+    </div>
+
+    <!-- Script to hide preloader after animation -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                var preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.classList.add('preloader-hidden');
+                    setTimeout(function() {
+                        preloader.style.display = 'none';
+                    }, 800); // must align with CSS transition time
+                }
+            }, 3000); // Allow time for animation to run
+        });
+    </script>
+
     <nav th:replace="~{fragments/header :: nav}"></nav>
 
     <!-- Hero Section -->

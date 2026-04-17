@@ -37,9 +37,15 @@
             </div>
         </div>
 
-        <div class="mt-4">
+        <div class="mt-4 d-flex gap-2">
             <a th:href="@{/contact(subject='Información sobre curso: ' + ${course.title})}"
-                class="btn btn-lg btn-warning">Consultar por este curso</a>
+                class="btn btn-lg btn-warning fw-bold">
+                <i class="bi bi-chat-dots me-2"></i> Consultar por este curso
+            </a>
+            <a th:href="'https://wa.me/5493764150660?text=Hola,%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20el%20curso:%20' + ${course.title}" 
+               class="btn btn-lg btn-success fw-bold" target="_blank">
+                <i class="bi bi-whatsapp me-2"></i> WhatsApp
+            </a>
         </div>
     </main>
 

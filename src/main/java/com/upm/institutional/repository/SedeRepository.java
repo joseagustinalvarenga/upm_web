@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface SedeRepository extends JpaRepository<Sede, Long> {
     Optional<Sede> findByName(String name);
+    java.util.List<Sede> findAllByOrderByNameAsc();
 }

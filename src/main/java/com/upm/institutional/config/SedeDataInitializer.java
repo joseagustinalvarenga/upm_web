@@ -49,9 +49,9 @@ public class SedeDataInitializer implements CommandLineRunner {
                     continue;
 
                 try {
-                    String nombre = getCellValue(row.getCell(0));
-                    String direccion = getCellValue(row.getCell(1));
-                    String telefono = getCellValue(row.getCell(2));
+                    String nombre = getCellValue(row.getCell(1)); // Column 1 is likely the Locality name
+                    String direccion = getCellValue(row.getCell(2)); // Column 2 is likely the Address
+                    String telefono = getCellValue(row.getCell(3)); // Column 3 is likely the Phone
 
                     if (nombre.isEmpty()) {
                         rowsSkipped++;

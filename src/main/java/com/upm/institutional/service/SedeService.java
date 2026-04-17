@@ -15,7 +15,7 @@ public class SedeService {
     private final SedeRepository sedeRepository;
 
     public List<Sede> getAllSedes() {
-        return sedeRepository.findAll();
+        return sedeRepository.findAllByOrderByNameAsc();
     }
 
     public Sede getSedeById(Long id) {

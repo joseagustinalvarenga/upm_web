@@ -40,6 +40,7 @@
                             <label for="schedule" class="form-label">Horario</label>
                             <input type="text" class="form-control" id="schedule" th:field="*{schedule}"
                                 placeholder="Ej: Lun a Vie: 8:00 - 20:00">
+                            <div class="form-text">Si se deja vacío, no se mostrará el ícono de reloj en la página pública.</div>
                         </div>
                     </div>
 
@@ -54,9 +55,17 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="mapUrl" class="form-label">URL Google Maps</label>
-                        <input type="text" class="form-control" id="mapUrl" th:field="*{mapUrl}">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="imageUrl" class="form-label">URL de la Imagen (Opcional)</label>
+                            <input type="text" class="form-control" id="imageUrl" th:field="*{imageUrl}"
+                                placeholder="https://ejemplo.com/imagen.jpg">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="mapUrl" class="form-label">URL Google Maps</label>
+                            <input type="text" class="form-control" id="mapUrl" th:field="*{mapUrl}"
+                                placeholder="https://goo.gl/maps/...">
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Guardar</button>

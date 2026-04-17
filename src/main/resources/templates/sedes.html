@@ -7,36 +7,88 @@
     <nav th:replace="~{fragments/header :: nav}"></nav>
 
     <!-- Page Header -->
-    <div class="bg-light py-5 mb-5 border-bottom">
-        <div class="container">
-            <h1 class="display-4 fw-bold">Nuestras Sedes</h1>
-            <p class="lead text-muted">La UPM está cerca tuyo. Encuentra la sede más cercana en la provincia de
-                Misiones.</p>
+    <div class="page-header-sedes">
+        <div class="container text-center text-white py-4">
+            <h1 class="display-3 fw-bold mb-3">Nuestras Sedes</h1>
+            <p class="lead opacity-75 mx-auto" style="max-width: 700px;">La UPM está cerca tuyo. Encuentra la sede más cercana en la provincia de Misiones y comienza tu formación profesional hoy mismo.</p>
         </div>
     </div>
 
-    <main class="container">
+    <main class="container mb-5">
+        <!-- Empty State -->
+        <div class="text-center py-5 my-5" th:if="${sedes == null || sedes.empty}">
+            <div class="icon-circle mx-auto mb-4" style="width: 80px; height: 80px;">
+                <i class="bi bi-building-exclamation display-4 text-primary"></i>
+            </div>
+            <h2 class="fw-bold text-muted">Aún no hay sedes publicadas</h2>
+            <p class="text-muted">Estamos expandiendo nuestra presencia. ¡Vuelve pronto para ver nuevas ubicaciones!</p>
+            <a href="/" class="btn btn-primary-custom mt-3">Volver al Inicio</a>
+        </div>
+
         <div class="row g-4">
-            <!-- Sede Posadas (Central) -->
-            <div class="col-md-6" th:each="sede : ${sedes}">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="bi bi-building text-primary display-5 me-3"></i>
-                            <h3 class="card-title fw-bold mb-0" th:text="${sede.name}">Nombre Sede</h3>
+            <div class="col-md-6 col-lg-4" th:each="sede : ${sedes}">
+                <div class="card card-hover h-100 overflow-hidden">
+                    <!-- Sede Image -->
+                    <div class="sede-card-img-wrapper" style="height: 200px; position: relative; overflow: hidden;">
+                        <!-- Sede Image or Abstract Pattern -->
+                        <img th:if="${sede.imageUrl != null && !sede.imageUrl.isEmpty()}" th:src="${sede.imageUrl}" 
+                             class="card-img-top w-100 h-100" style="object-fit: cover; transition: transform 0.5s ease;" alt="Imagen Sede">
+                        
+                        <div th:unless="${sede.imageUrl != null && !sede.imageUrl.isEmpty()}" class="w-100 h-100 bg-sede-pattern d-flex flex-column align-items-center justify-content-center">
+                            <i class="bi bi-mortarboard display-3 text-primary opacity-25"></i>
+                            <span class="text-primary fw-bold opacity-25 mt-1" style="font-size: 1.2rem; letter-spacing: 2px;">UPM</span>
                         </div>
-                        <p class="card-text text-muted" th:text="${sede.description}">Descripción</p>
-                        <ul class="list-unstyled mt-4">
-                            <li class="mb-3" th:if="${sede.address}"><i class="bi bi-geo-alt text-warning me-2"></i>
-                                <span th:text="${sede.address}">Dirección</span></li>
-                            <li class="mb-3" th:if="${sede.schedule}"><i class="bi bi-clock text-warning me-2"></i>
-                                <span th:text="${sede.schedule}">Horario</span></li>
-                            <li class="mb-3" th:if="${sede.phone}"><i class="bi bi-telephone text-warning me-2"></i>
-                                <span th:text="${sede.phone}">Teléfono</span></li>
-                            <li th:if="${sede.mapUrl != null && !sede.mapUrl.isEmpty()}"><a th:href="${sede.mapUrl}"
-                                    target="_blank" class="btn btn-outline-primary btn-sm mt-2"><i
-                                        class="bi bi-map"></i> Ver en Mapa</a></li>
-                        </ul>
+                        <div class="sede-badge">
+                            <span class="badge bg-primary rounded-pill px-3 py-2 shadow-sm">
+                                <i class="bi bi-geo-alt-fill me-1"></i> <span th:text="${sede.name}">Localidad</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <h4 class="card-title fw-bold mb-3 text-primary-custom-dark" th:text="${sede.name}">Nombre Sede</h4>
+                        <p class="card-text text-muted mb-4" th:text="${sede.description}" style="font-size: 0.95rem; line-height: 1.6;">Descripción</p>
+                        
+                        <div class="sede-info-list mt-auto">
+                            <div class="d-flex align-items-start mb-3" th:if="${sede.address}">
+                                <div class="icon-circle me-3"><i class="bi bi-geo-alt text-primary"></i></div>
+                                <div>
+                                    <small class="text-uppercase text-muted fw-bold d-block" style="font-size: 0.7rem; letter-spacing: 1px;">Dirección</small>
+                                    <span class="d-block" th:text="${sede.address}">Dirección</span>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-start mb-3" th:if="${sede.schedule != null and !sede.schedule.trim().isEmpty()}">
+                                <div class="icon-circle me-3"><i class="bi bi-clock text-primary"></i></div>
+                                <div>
+                                    <small class="text-uppercase text-muted fw-bold d-block" style="font-size: 0.7rem; letter-spacing: 1px;">Horario</small>
+                                    <span class="d-block" th:text="${sede.schedule}">Horario</span>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-start mb-3" th:if="${sede.phone}">
+                                <div class="icon-circle me-3"><i class="bi bi-telephone text-primary"></i></div>
+                                <div>
+                                    <small class="text-uppercase text-muted fw-bold d-block" style="font-size: 0.7rem; letter-spacing: 1px;">Teléfono</small>
+                                    <span class="d-block" th:text="${sede.phone}">Teléfono</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer bg-white border-0 p-4 pt-0">
+                        <div class="row g-2">
+                            <div class="col-12" th:if="${sede.mapUrl != null && !sede.mapUrl.isEmpty()}">
+                                <a th:href="${sede.mapUrl}" target="_blank" class="btn btn-primary w-100 fw-bold py-2 rounded-3">
+                                    <i class="bi bi-map me-2"></i> Ver en Mapa
+                                </a>
+                            </div>
+                            <div class="col-12" th:if="${sede.email}">
+                                <a th:href="'mailto:' + ${sede.email}" class="btn btn-outline-secondary w-100 fw-bold py-2 rounded-3">
+                                    <i class="bi bi-envelope me-2"></i> Enviar Email
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
