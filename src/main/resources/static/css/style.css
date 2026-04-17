@@ -255,13 +255,25 @@ h6 {
 
 .preloader-text {
     color: var(--text-light);
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-family: var(--font-heading);
-    font-weight: 700;
+    font-weight: 800;
     margin-top: 20px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     opacity: 0;
     animation: fade-in-up 1s ease-out 1s forwards;
+}
+
+.preloader-phrase {
+    color: var(--text-light);
+    font-size: 0.85rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    margin-top: 5px;
+    opacity: 0;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    animation: fade-in-up 1s ease-out 1.5s forwards;
 }
 
 @keyframes draw-path {
