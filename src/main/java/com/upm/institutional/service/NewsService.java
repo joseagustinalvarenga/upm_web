@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.util.Base64;
+
 @Service
 @RequiredArgsConstructor
 public class NewsService {
@@ -46,7 +49,19 @@ public class NewsService {
         }
         news.setTitle(newsDto.getTitle());
         news.setContent(newsDto.getContent());
-        news.setImageUrl(newsDto.getImageUrl());
+        
+        if (newsDto.getImageFile() != null && !newsDto.getImageFile().isEmpty()) {
+            try {
+                String base64Image = Base64.getEncoder().encodeToString(newsDto.getImageFile().getBytes());
+                String mimeType = newsDto.getImageFile().getContentType();
+                news.setImageUrl("data:" + mimeType + ";base64," + base64Image);
+            } catch (IOException e) {
+                throw new RuntimeException("Error al procesar la imagen", e);
+            }
+        } else if (newsDto.getImageUrl() != null) {
+            news.setImageUrl(newsDto.getImageUrl());
+        }
+
         news.setEventDate(newsDto.getEventDate());
         if (newsDto.getStatus() != null) {
             news.setStatus(newsDto.getStatus());

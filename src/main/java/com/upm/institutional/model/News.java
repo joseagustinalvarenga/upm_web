@@ -25,6 +25,7 @@ public class News {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(columnDefinition = "TEXT")
     private String imageUrl;
 
     private LocalDate eventDate;

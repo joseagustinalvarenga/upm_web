@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
 
 @Data
@@ -21,6 +23,8 @@ public class NewsDto {
     private String content;
 
     private String imageUrl;
+
+    private MultipartFile imageFile;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate eventDate;

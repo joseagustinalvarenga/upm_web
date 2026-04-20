@@ -19,7 +19,7 @@
                 </div>
 
                 <form th:action="${newsDto.id == null ? '/admin/news' : '/admin/news/' + newsDto.id}"
-                    th:object="${newsDto}" method="post" class="needs-validation">
+                    th:object="${newsDto}" method="post" enctype="multipart/form-data" class="needs-validation">
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Título</label>
@@ -34,9 +34,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="imageUrl" class="form-label">URL de la Imagen</label>
-                        <input type="url" class="form-control" th:field="*{imageUrl}" id="imageUrl"
-                            placeholder="https://ejemplo.com/imagen.jpg">
+                        <label for="imageFile" class="form-label">Imagen de la Noticia</label>
+                        <input type="file" class="form-control" th:field="*{imageFile}" id="imageFile" accept="image/*">
+                        <input type="hidden" th:field="*{imageUrl}">
+                        <div class="mt-2" th:if="*{imageUrl}">
+                            <p class="small text-muted">Imagen actual:</p>
+                            <img th:src="*{imageUrl}" alt="Preview" class="img-thumbnail" style="max-height: 200px;">
+                        </div>
                     </div>
 
                     <div class="mb-3">
