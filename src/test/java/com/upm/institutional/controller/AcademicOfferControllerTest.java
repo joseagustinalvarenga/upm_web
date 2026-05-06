@@ -1,6 +1,7 @@
 package com.upm.institutional.controller;
 
 import com.upm.institutional.service.AcademicOfferService;
+import com.upm.institutional.service.CarouselImageService;
 import com.upm.institutional.service.ContactService;
 import com.upm.institutional.service.CourseService;
 import com.upm.institutional.service.FeatureService;
@@ -47,6 +48,9 @@ public class AcademicOfferControllerTest {
 
     @MockBean
     private AcademicOfferService academicOfferService;
+
+    @MockBean
+    private CarouselImageService carouselImageService;
 
     @MockBean
     private com.upm.institutional.repository.UserRepository userRepository;
