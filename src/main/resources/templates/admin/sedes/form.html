@@ -68,6 +68,19 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="latitude" class="form-label">Latitud (Mapa Inicio)</label>
+                            <input type="number" step="any" class="form-control" id="latitude" th:field="*{latitude}"
+                                placeholder="-27.36708">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="longitude" class="form-label">Longitud (Mapa Inicio)</label>
+                            <input type="number" step="any" class="form-control" id="longitude" th:field="*{longitude}"
+                                placeholder="-55.89608">
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Guardar</button>
                     <a href="/admin/sedes" class="btn btn-secondary">Cancelar</a>
                 </form>

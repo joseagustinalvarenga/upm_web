@@ -73,6 +73,7 @@ public class PublicController {
         model.addAttribute("carouselImages", carouselImages);
 
         model.addAttribute("features", featureService.findAllFeatures());
+        model.addAttribute("sedes", sedeService.getAllSedes());
 
         return "home";
     }

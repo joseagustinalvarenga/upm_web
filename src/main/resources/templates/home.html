@@ -17,7 +17,7 @@
             <path class="preloader-path" d="M15,50 L50,65 M15,60 L50,75" />
             <!-- Book Pages lines right -->
             <path class="preloader-path" d="M85,50 L50,65 M85,60 L50,75" />
-            
+
             <!-- Graduation Cap Top -->
             <path class="preloader-path" d="M50,10 L15,25 L50,40 L85,25 Z" />
             <path class="preloader-path-filled" d="M50,10 L15,25 L50,40 L85,25 Z" />
@@ -32,12 +32,12 @@
 
     <!-- Script to hide preloader after animation -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(function() {
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(function () {
                 var preloader = document.getElementById('preloader');
                 if (preloader) {
                     preloader.classList.add('preloader-hidden');
-                    setTimeout(function() {
+                    setTimeout(function () {
                         preloader.style.display = 'none';
                     }, 800); // must align with CSS transition time
                 }
@@ -47,15 +47,44 @@
 
     <nav th:replace="~{fragments/header :: nav}"></nav>
 
-    <!-- Hero Section -->
-    <!-- Hero Section -->
-    <header class="hero-section"
-        th:style="'background: linear-gradient(rgba(242, 101, 34, 0.6), rgba(51, 51, 51, 0.9)), url(' + ${heroImageUrl} + '); background-size: cover; background-position: center;'">
-        <div class="container">
-            <h1 class="display-3 fw-bold">Universidad Popular de Misiones</h1>
-            <p class="lead mb-4">Formación gratuita y certificada en oficios y emprendimientos, para generar
-                oportunidades de trabajo y desarrollo local en Misiones</p>
-            <a class="btn btn-primary-custom btn-lg" href="/courses">Explorar Cursos</a>
+    <!-- Hero Carousel Section -->
+    <header class="hero-carousel">
+        <div id="heroCarousel" class="carousel slide carousel-fade h-100" data-bs-ride="carousel">
+            <div class="carousel-inner h-100">
+                <!-- If no images, show a default one -->
+                <div class="carousel-item active h-100" th:if="${carouselImages == null || carouselImages.empty}">
+                    <div class="hero-slide-bg" th:style="'background: linear-gradient(rgba(242, 101, 34, 0.4), rgba(51, 51, 51, 0.7)), url(' + ${heroImageUrl} + '); background-size: cover; background-position: center;'"></div>
+                    <div class="carousel-caption d-flex align-items-center h-100">
+                        <div class="container text-start">
+                            <h1 class="display-3 fw-bold">Universidad Popular de Misiones</h1>
+                            <p class="lead mb-4">Formación gratuita y certificada en oficios y emprendimientos, para generar oportunidades de trabajo y desarrollo local en Misiones</p>
+                            <a class="btn btn-primary-custom btn-lg" href="/courses">Explorar Cursos</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dynamic images from DB -->
+                <div class="carousel-item h-100" th:each="img, iterStat : ${carouselImages}"
+                     th:classappend="${iterStat.first} ? 'active'" th:unless="${carouselImages == null || carouselImages.empty}">
+                    <div class="hero-slide-bg" th:style="'background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(' + ${img} + '); background-size: cover; background-position: center;'"></div>
+                    <div class="carousel-caption d-flex align-items-center h-100">
+                        <div class="container text-start">
+                            <h1 class="display-3 fw-bold">Universidad Popular de Misiones</h1>
+                            <p class="lead mb-4">Formación gratuita y certificada en oficios y emprendimientos, para generar oportunidades de trabajo y desarrollo local en Misiones</p>
+                            <a class="btn btn-primary-custom btn-lg" href="/courses">Explorar Cursos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev" th:if="${carouselImages != null && carouselImages.size() > 1}">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next" th:if="${carouselImages != null && carouselImages.size() > 1}">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
         </div>
     </header>
 
@@ -198,6 +227,126 @@
                 <a href="/contact" class="btn btn-outline-light btn-lg px-5">Únete a nosotros</a>
             </div>
         </section>
+
+        <!-- Sedes Interactive Map Section -->
+        <section class="py-5 bg-light">
+            <div class="container py-4">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 mb-4 mb-lg-0 pe-lg-5">
+                        <div class="pe-4 border-end border-primary border-4"
+                            style="border-right-width: 4px !important; border-color: #0085A1 !important;">
+                            <h2 class="display-5 fw-bold mb-3 text-dark"
+                                style="font-weight: 800 !important; color: #333 !important;">Nuestras sedes en Misiones.
+                            </h2>
+                            <p class="lead text-muted fs-4">Más de 30 sedes ubicadas a lo largo y ancho de la provincia.
+                                Elegí la tuya.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div id="sedes-map" class="rounded shadow-sm"
+                            style="height: 500px; width: 100%; z-index: 1; border-radius: 15px !important;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Include Leaflet CSS and JS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+        <script th:inline="javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                var map = L.map('sedes-map').setView([-27.3671, -55.8961], 7); // Center on Misiones
+                
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+                    subdomains: 'abcd',
+                    maxZoom: 20
+                }).addTo(map);
+
+                var sedesList = /*[[${sedes}]]*/ [];
+                
+                var customIcon = L.icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                });
+
+                // Lookup table for Misiones cities to cover sedes without explicit coordinates
+                var cityCoordinates = {
+                    'Posadas': [-27.3671, -55.8961],
+                    'Oberá': [-27.4833, -55.1167],
+                    'Eldorado': [-26.4069, -54.6292],
+                    'Puerto Iguazú': [-25.5991, -54.5736],
+                    'Iguazú': [-25.5991, -54.5736],
+                    'Leandro N. Alem': [-27.6031, -55.3242],
+                    'Alem': [-27.6031, -55.3242],
+                    'Apóstoles': [-27.9155, -55.7554],
+                    'San Vicente': [-27.0167, -54.5167],
+                    'Jardín América': [-27.0422, -55.2289],
+                    'Montecarlo': [-26.5667, -54.7500],
+                    'Aristóbulo del Valle': [-27.0944, -54.8944],
+                    'El Soberbio': [-27.2972, -54.1953],
+                    'Puerto Rico': [-26.7958, -55.0239],
+                    'Wanda': [-25.9733, -54.5683],
+                    'Andresito': [-25.6667, -54.0500],
+                    'San Pedro': [-26.6194, -54.1083],
+                    'San Ignacio': [-27.2561, -55.5344],
+                    'Candelaria': [-27.4589, -55.7442],
+                    'Campo Grande': [-27.2081, -54.9819],
+                    'Campo Viera': [-27.3244, -55.0483],
+                    'Garupá': [-27.4833, -55.8333],
+                    'Concepción de la Sierra': [-27.9833, -55.5167],
+                    'Santa Ana': [-27.3667, -55.5833],
+                    'Cerro Azul': [-27.6333, -55.5000],
+                    '25 de Mayo': [-27.3833, -54.7500],
+                    'Bernardo de Irigoyen': [-26.2558, -53.6453],
+                    'San Javier': [-27.8731, -55.1331],
+                    'Puerto Esperanza': [-26.0167, -54.6167],
+                    'Bonpland': [-27.4819, -55.4794],
+                    'Itacaruaré': [-27.8833, -55.2833],
+                    'Azara': [-28.0667, -55.6833]
+                };
+
+                var bounds = [];
+
+                if (sedesList && sedesList.length > 0) {
+                    sedesList.forEach(function(sede) {
+                        var lat = sede.latitude;
+                        var lon = sede.longitude;
+
+                        // If coordinates are missing, try to find them by city name in the lookup table
+                        if (!lat || !lon) {
+                            for (var city in cityCoordinates) {
+                                if (sede.name.includes(city) || (sede.address && sede.address.includes(city))) {
+                                    lat = cityCoordinates[city][0];
+                                    lon = cityCoordinates[city][1];
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (lat && lon) {
+                            var marker = L.marker([lat, lon], {icon: customIcon}).addTo(map);
+                            var popupContent = '<div style="text-align: center;"><strong>' + sede.name + '</strong><br>';
+                            if (sede.address) popupContent += sede.address + '<br>';
+                            popupContent += '<a href="/sedes" class="btn btn-sm btn-primary mt-2" style="background-color: #F26522; border: none;">Ver sede</a></div>';
+                            
+                            marker.bindPopup(popupContent);
+                            bounds.push([lat, lon]);
+                        }
+                    });
+
+                    if (bounds.length > 0) {
+                        map.fitBounds(bounds, {padding: [50, 50], maxZoom: 10});
+                    }
+                }
+            });
+        </script>
 
         <!-- Quienes Somos Section -->
         <section class="py-5 bg-white">

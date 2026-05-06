@@ -31,4 +31,7 @@ public class Sede {
     private String mapUrl;
 
     private String imageUrl;
+    
+    private Double latitude;
+    private Double longitude;
 }
