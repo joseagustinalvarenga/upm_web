@@ -1,0 +1,1 @@
+ALTER TABLE carousel_images ADD COLUMN location VARCHAR(50) DEFAULT 'HERO';

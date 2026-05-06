@@ -21,8 +21,12 @@ public class CarouselImageService {
         return carouselImageRepository.findAll();
     }
 
+    public List<CarouselImage> findByLocation(String location) {
+        return carouselImageRepository.findByLocation(location);
+    }
+
     @Transactional
-    public void uploadImage(MultipartFile file) {
+    public void uploadImage(MultipartFile file, String location) {
         if (file.isEmpty()) {
             throw new RuntimeException("El archivo está vacío");
         }
@@ -32,6 +36,7 @@ public class CarouselImageService {
 
             CarouselImage image = new CarouselImage();
             image.setImageData("data:" + mimeType + ";base64," + base64Image);
+            image.setLocation(location != null ? location : "HERO");
 
             carouselImageRepository.save(image);
         } catch (IOException e) {

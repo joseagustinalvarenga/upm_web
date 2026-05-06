@@ -27,6 +27,13 @@
                                         accept="image/*" required>
                                 </div>
                                 <div class="col-auto">
+                                    <label for="location" class="form-label">Ubicación</label>
+                                    <select class="form-select" id="location" name="location">
+                                        <option value="HERO">Portada (Hero)</option>
+                                        <option value="STUDENT_LIFE">Vida Universitaria</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
                                     <button type="submit" class="btn btn-success"><i
                                             class="bi bi-cloud-upload me-2"></i>Subir</button>
                                 </div>
@@ -42,6 +49,10 @@
                                     <img th:src="${img.imageData}" class="card-img-top" alt="Imagen Carrusel"
                                         style="height: 200px; object-fit: cover;">
                                     <div class="card-body text-center">
+                                        <div class="mb-2">
+                                            <span th:if="${img.location == 'HERO'}" class="badge bg-primary">Portada</span>
+                                            <span th:if="${img.location == 'STUDENT_LIFE'}" class="badge bg-info text-dark">Vida Universitaria</span>
+                                        </div>
                                         <p class="card-text small text-muted">Subida el: <span
                                                 th:text="${#temporals.format(img.createdAt, 'dd/MM/yyyy HH:mm')}">Fecha</span>
                                         </p>

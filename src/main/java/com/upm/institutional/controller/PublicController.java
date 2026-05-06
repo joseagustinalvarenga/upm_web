@@ -52,25 +52,33 @@ public class PublicController {
                 "/images/university_campus_hero.png");
         model.addAttribute("heroImageUrl", heroImageUrl);
 
-        // Carousel Images
-        java.util.List<com.upm.institutional.model.CarouselImage> dbImages = carouselImageService.findAll();
-        java.util.List<String> carouselImages = new java.util.ArrayList<>();
-
-        if (!dbImages.isEmpty()) {
-            for (com.upm.institutional.model.CarouselImage img : dbImages) {
-                carouselImages.add(img.getImageData());
+        // Carousel Images - Hero
+        java.util.List<com.upm.institutional.model.CarouselImage> dbHeroImages = carouselImageService.findByLocation("HERO");
+        java.util.List<String> heroImages = new java.util.ArrayList<>();
+        if (!dbHeroImages.isEmpty()) {
+            for (com.upm.institutional.model.CarouselImage img : dbHeroImages) {
+                heroImages.add(img.getImageData());
             }
         } else {
-            // Fallback to defaults if no images in DB
-            carouselImages.add(
-                    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop");
-            carouselImages.add(
-                    "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop");
-            carouselImages.add(
-                    "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop");
+            // Fallback for Hero
+            heroImages.add("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop");
+            heroImages.add("https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop");
         }
+        model.addAttribute("carouselImages", heroImages);
 
-        model.addAttribute("carouselImages", carouselImages);
+        // Carousel Images - Student Life
+        java.util.List<com.upm.institutional.model.CarouselImage> dbLifeImages = carouselImageService.findByLocation("STUDENT_LIFE");
+        java.util.List<String> lifeImages = new java.util.ArrayList<>();
+        if (!dbLifeImages.isEmpty()) {
+            for (com.upm.institutional.model.CarouselImage img : dbLifeImages) {
+                lifeImages.add(img.getImageData());
+            }
+        } else {
+            // Fallback for Student Life
+            lifeImages.add("https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop");
+            lifeImages.add("https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2070&auto=format&fit=crop");
+        }
+        model.addAttribute("lifeImages", lifeImages);
 
         model.addAttribute("features", featureService.findAllFeatures());
         model.addAttribute("sedes", sedeService.getAllSedes());

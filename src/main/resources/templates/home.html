@@ -210,7 +210,7 @@
                 class="carousel slide carousel-fade position-absolute top-0 start-0 w-100 h-100" data-bs-ride="carousel"
                 style="z-index: -1;">
                 <div class="carousel-inner h-100">
-                    <div class="carousel-item h-100" th:each="img, iterStat : ${carouselImages}"
+                    <div class="carousel-item h-100" th:each="img, iterStat : ${lifeImages}"
                         th:classappend="${iterStat.first} ? 'active'">
                         <img th:src="${img}" class="d-block w-100 h-100" alt="Vida Universitaria"
                             style="object-fit: cover;">

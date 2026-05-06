@@ -22,9 +22,11 @@ public class AdminCarouselController {
     }
 
     @PostMapping("/upload")
-    public String upload(@RequestParam("imageFile") MultipartFile imageFile, RedirectAttributes redirectAttributes) {
+    public String upload(@RequestParam("imageFile") MultipartFile imageFile, 
+                         @RequestParam(value = "location", defaultValue = "HERO") String location,
+                         RedirectAttributes redirectAttributes) {
         try {
-            carouselImageService.uploadImage(imageFile);
+            carouselImageService.uploadImage(imageFile, location);
             redirectAttributes.addFlashAttribute("success", "Imagen subida correctamente.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al subir la imagen: " + e.getMessage());

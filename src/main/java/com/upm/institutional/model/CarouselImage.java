@@ -20,6 +20,9 @@ public class CarouselImage {
     @Column(name = "image_data", columnDefinition = "TEXT", nullable = false)
     private String imageData;
 
+    @Column(name = "location")
+    private String location; // e.g., "HERO" or "STUDENT_LIFE"
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;

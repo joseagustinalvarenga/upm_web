@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CarouselImageRepository extends JpaRepository<CarouselImage, Long> {
+    java.util.List<CarouselImage> findByLocation(String location);
 }
