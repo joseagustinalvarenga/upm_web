@@ -1,3 +1,0 @@
-﻿Project: zooming-reverence
-Environment: production
-Service: zooming-reverence

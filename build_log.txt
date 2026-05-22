@@ -1,9 +1,0 @@
-﻿[INFO] Scanning for projects...
-[INFO] 
-[INFO] -----------------------< com.upm:institutional >------------------------
-[INFO] Building institutional 0.0.1-SNAPSHOT
-[INFO]   from pom.xml
-[INFO] --------------------------------[ jar ]---------------------------------
-[INFO] 
-[INFO] --- clean:3.3.2:clean (default-clean) @ institutional ---
-[INFO] Deleting C:\Users\usuario\Desktop\PAGINA UPM\target
