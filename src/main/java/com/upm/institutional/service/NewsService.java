@@ -54,12 +54,18 @@ public class NewsService {
             try {
                 String base64Image = Base64.getEncoder().encodeToString(newsDto.getImageFile().getBytes());
                 String mimeType = newsDto.getImageFile().getContentType();
-                news.setImageUrl("data:" + mimeType + ";base64," + base64Image);
+                String rawDataUri = "data:" + mimeType + ";base64," + base64Image;
+                String optimizedDataUri = com.upm.institutional.util.ImageUtils.resizeAndCompressBase64(rawDataUri, 1024, 0.75f);
+                news.setImageUrl(optimizedDataUri);
             } catch (IOException e) {
                 throw new RuntimeException("Error al procesar la imagen", e);
             }
         } else if (newsDto.getImageUrl() != null) {
-            news.setImageUrl(newsDto.getImageUrl());
+            if (newsDto.getImageUrl().startsWith("data:")) {
+                news.setImageUrl(com.upm.institutional.util.ImageUtils.resizeAndCompressBase64(newsDto.getImageUrl(), 1024, 0.75f));
+            } else {
+                news.setImageUrl(newsDto.getImageUrl());
+            }
         }
 
         news.setEventDate(newsDto.getEventDate());

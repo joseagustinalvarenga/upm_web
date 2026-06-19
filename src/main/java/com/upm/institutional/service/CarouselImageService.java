@@ -33,9 +33,11 @@ public class CarouselImageService {
         try {
             String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
             String mimeType = file.getContentType();
+            String rawDataUri = "data:" + mimeType + ";base64," + base64Image;
+            String optimizedDataUri = com.upm.institutional.util.ImageUtils.resizeAndCompressBase64(rawDataUri, 1280, 0.75f);
 
             CarouselImage image = new CarouselImage();
-            image.setImageData("data:" + mimeType + ";base64," + base64Image);
+            image.setImageData(optimizedDataUri);
             image.setLocation(location != null ? location : "HERO");
 
             carouselImageRepository.save(image);

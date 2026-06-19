@@ -58,7 +58,9 @@ public class CourseService {
             try {
                 String base64Image = java.util.Base64.getEncoder().encodeToString(courseDto.getImageFile().getBytes());
                 String mimeType = courseDto.getImageFile().getContentType();
-                course.setImageUrl("data:" + mimeType + ";base64," + base64Image);
+                String rawDataUri = "data:" + mimeType + ";base64," + base64Image;
+                String optimizedDataUri = com.upm.institutional.util.ImageUtils.resizeAndCompressBase64(rawDataUri, 1024, 0.75f);
+                course.setImageUrl(optimizedDataUri);
             } catch (java.io.IOException e) {
                 throw new RuntimeException("Error al procesar la imagen", e);
             }
