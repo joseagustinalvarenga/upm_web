@@ -14,8 +14,11 @@
 body {
     font-family: var(--font-body);
     color: var(--text-dark);
+}
+
+/* Spacer for fixed public navbar */
+body:has(.navbar-custom) {
     padding-top: 100px;
-    /* Spacer for fixed navbar */
 }
 
 h1,
