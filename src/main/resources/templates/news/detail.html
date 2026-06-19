@@ -6,28 +6,154 @@
 <body>
     <nav th:replace="~{fragments/header :: nav}"></nav>
 
-    <main class="container mt-5">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/news">Noticias</a></li>
-                <li class="breadcrumb-item active" aria-current="page" th:text="${news.title}">Noticia</li>
+    <main class="container mt-5 news-article-container">
+        <!-- Breadcrumb navigation -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb bg-transparent p-0 m-0">
+                <li class="breadcrumb-item"><a href="/" class="text-decoration-none text-muted">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="/news" class="text-decoration-none text-muted">Noticias</a></li>
+                <li class="breadcrumb-item active text-truncate" aria-current="page" th:text="${news.title}" style="max-width: 300px;">Noticia</li>
             </ol>
         </nav>
 
-        <h1 class="display-5" th:text="${news.title}">Título</h1>
-        <p class="text-muted" th:if="${news.eventDate}">Fecha del evento: <span th:text="${news.eventDate}"></span></p>
-        <hr>
-        <div th:if="${news.imageUrl}" class="mb-4">
-            <img th:src="${news.imageUrl}" class="img-fluid rounded" alt="Imagen noticia"
-                style="max-height: 500px; width: 100%; object-fit: cover;">
-        </div>
-        <hr>
-        <div class="content fs-5" style="white-space: pre-wrap;" th:text="${news.content}">
-            Contenido de la noticia...
+        <div class="row g-5">
+            <!-- Left column: Main Article -->
+            <article class="col-lg-8">
+                <!-- Section Category -->
+                <span class="news-kicker">Noticias e Institucional</span>
+                
+                <!-- Headline -->
+                <h1 class="news-headline" th:text="${news.title}">Título de la Noticia</h1>
+                
+                <!-- Print and Share metadata bar -->
+                <div class="news-meta-divider">
+                    <div class="news-meta-left">
+                        <span class="news-author">Redacción UPM</span>
+                        <span class="text-muted d-none d-sm-inline">|</span>
+                        
+                        <!-- Date format using Thymeleaf temporals -->
+                        <span class="news-date-item">
+                            <i class="bi bi-clock me-1"></i>
+                            <span th:text="${news.createdAt != null ? #temporals.format(news.createdAt, 'dd/MM/yyyy') : 'Reciente'}">Fecha</span>
+                        </span>
+                        
+                        <span th:if="${news.eventDate}" class="text-muted d-none d-sm-inline">|</span>
+                        <span th:if="${news.eventDate}" class="news-date-item text-secondary">
+                            <i class="bi bi-calendar-event me-1"></i>
+                            <span>Evento: </span>
+                            <span th:text="${#temporals.format(news.eventDate, 'dd/MM/yyyy')}">Fecha evento</span>
+                        </span>
+                    </div>
+                    
+                    <div class="news-share-buttons">
+                        <!-- Print Button -->
+                        <button class="btn-news-share" onclick="window.print()" title="Imprimir artículo">
+                            <i class="bi bi-printer"></i> <span class="d-none d-sm-inline">Imprimir</span>
+                        </button>
+                        <!-- Copy link button -->
+                        <button class="btn-news-share" onclick="copyArticleUrl()" title="Copiar enlace">
+                            <i class="bi bi-link-45deg"></i> <span class="d-none d-sm-inline">Copiar</span>
+                        </button>
+                        <!-- WhatsApp button -->
+                        <button class="btn-news-share whatsapp" onclick="shareOnWhatsApp()" title="Compartir en WhatsApp">
+                            <i class="bi bi-whatsapp"></i> <span class="d-none d-sm-inline">Compartir</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main News Image Frame with Caption -->
+                <div th:if="${news.imageUrl}" class="news-image-frame mb-4">
+                    <img th:src="${news.imageUrl}" class="img-fluid" alt="Imagen de la noticia">
+                    <figcaption class="news-img-caption">
+                        Prensa UPM — Registro de capacitaciones y actividades de extensión académica organizadas por la Universidad Popular de Misiones.
+                    </figcaption>
+                </div>
+
+                <!-- Article Content Body with Paragraph Generation -->
+                <div class="news-body-content">
+                    <!-- We split the news text content by newlines and print only non-empty paragraphs -->
+                    <p th:each="paragraph : ${#strings.arraySplit(news.content, '&#10;')}"
+                       th:unless="${#strings.isEmpty(#strings.trim(paragraph))}"
+                       th:text="${paragraph}"
+                       class="news-paragraph"></p>
+                </div>
+            </article>
+
+            <!-- Right column: Sidebar Widgets -->
+            <aside class="col-lg-4">
+                <!-- Otras Noticias widget -->
+                <div class="mb-5" th:if="${otherNews != null and !otherNews.isEmpty()}">
+                    <h3 class="news-sidebar-title">Otras Noticias</h3>
+                    <div class="list-group list-group-flush">
+                        <a th:each="item : ${otherNews}" th:href="@{/news/{id}(id=${item.id})}"
+                           class="list-group-item news-sidebar-card px-0">
+                            <div class="d-flex align-items-center gap-3">
+                                <img th:if="${item.imageUrl}" th:src="${item.imageUrl}" class="rounded"
+                                     style="width: 70px; height: 70px; object-fit: cover;" alt="Miniatura noticia">
+                                <div class="flex-grow-1">
+                                    <div class="news-sidebar-date mb-1" th:if="${item.eventDate}">
+                                        <i class="bi bi-calendar-event me-1"></i>
+                                        <span th:text="${#temporals.format(item.eventDate, 'dd/MM/yyyy')}">Fecha</span>
+                                    </div>
+                                    <h4 class="card-title m-0" th:text="${item.title}">Título Noticia</h4>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recommended Courses Widget -->
+                <div class="mb-5" th:if="${courses != null and !courses.isEmpty()}">
+                    <h3 class="news-sidebar-title">Cursos Disponibles</h3>
+                    <div class="d-flex flex-column gap-3">
+                        <div th:each="course : ${courses}" class="sidebar-course-card">
+                            <img th:if="${course.imageUrl}" th:src="${course.imageUrl}" class="sidebar-course-img" alt="Imagen del curso">
+                            <div th:unless="${course.imageUrl}" class="sidebar-course-img bg-light d-flex align-items-center justify-content-center">
+                                <i class="bi bi-mortarboard fs-1 text-muted"></i>
+                            </div>
+                            <div class="sidebar-course-body">
+                                <h4 class="sidebar-course-title" th:text="${course.title}">Nombre del Curso</h4>
+                                <div class="sidebar-course-meta">
+                                    <span class="badge bg-light text-secondary border me-1" th:text="${course.modality}">Modalidad</span>
+                                    <span th:if="${course.duration}" class="text-muted"><i class="bi bi-clock me-1"></i><span th:text="${course.duration}">Duración</span></span>
+                                </div>
+                                <a th:href="@{/courses/{id}(id=${course.id})}" class="btn btn-sm btn-outline-primary w-100 rounded-pill mt-2">
+                                    Ver Info del Curso
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="/courses" class="btn btn-sm btn-link text-primary text-decoration-none fw-bold">
+                            Ver todos los cursos <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </aside>
         </div>
     </main>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <!-- Client-side share functions -->
+    <script>
+        function shareOnWhatsApp() {
+            var title = document.title;
+            var url = window.location.href;
+            var text = title + " - " + url;
+            window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(text), "_blank");
+        }
+        
+        function copyArticleUrl() {
+            navigator.clipboard.writeText(window.location.href)
+                .then(function() {
+                    alert("Enlace copiado al portapapeles");
+                })
+                .catch(function(err) {
+                    console.error('No se pudo copiar el enlace: ', err);
+                });
+        }
+    </script>
 </body>
 
 </html>

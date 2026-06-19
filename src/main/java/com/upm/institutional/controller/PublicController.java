@@ -128,6 +128,21 @@ public class PublicController {
     public String newsDetail(@PathVariable Long id, Model model) {
         News news = newsService.findPublishedById(id);
         model.addAttribute("news", news);
+
+        // Fetch other recent news (excluding current) for the sidebar
+        Pageable otherNewsPageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "eventDate"));
+        Page<News> recentNews = newsService.findPublishedNews(otherNewsPageable);
+        java.util.List<News> otherNews = recentNews.getContent().stream()
+                .filter(n -> !n.getId().equals(id))
+                .limit(3)
+                .collect(java.util.stream.Collectors.toList());
+        model.addAttribute("otherNews", otherNews);
+
+        // Fetch recent courses for the sidebar
+        Pageable coursePageable = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<Course> recentCourses = courseService.findPublishedCourses(coursePageable);
+        model.addAttribute("courses", recentCourses.getContent());
+
         return "news/detail";
     }
 
