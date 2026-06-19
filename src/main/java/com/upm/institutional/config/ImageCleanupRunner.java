@@ -27,6 +27,12 @@ public class ImageCleanupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        String runCleanup = System.getenv("RUN_IMAGE_CLEANUP");
+        if (!"true".equals(runCleanup)) {
+            log.info("Database image optimization is skipped on startup by default (set RUN_IMAGE_CLEANUP=true to enable).");
+            return;
+        }
+
         new Thread(() -> {
             log.info("Starting database image size audit and optimization in background thread...");
             try {
