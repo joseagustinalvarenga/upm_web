@@ -6,30 +6,70 @@
 <body>
     <nav th:replace="~{fragments/header :: nav}"></nav>
 
-    <main class="container mt-5">
-        <h1 class="mb-4">Noticias y Eventos</h1>
-        <div class="list-group">
-            <a th:each="item : ${news}" th:href="@{/news/{id}(id=${item.id})}"
-                class="list-group-item list-group-item-action" aria-current="true">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1" th:text="${item.title}">Título Noticia</h5>
-                    <small th:text="${item.eventDate}">Fecha</small>
-                </div>
-                <div class="d-flex gap-3">
-                    <img th:if="${item.imageUrl}" th:src="${item.imageUrl}" class="rounded"
-                        style="width: 100px; height: 100px; object-fit: cover;" alt="Imagen noticia">
-                    <p class="mb-1 text-truncate" th:text="${item.content}">Contenido...</p>
-                </div>
-            </a>
+    <!-- Page Header -->
+    <div class="page-header-premium">
+        <div class="container">
+            <h1 class="display-3 fw-bold">Noticias y Eventos</h1>
+            <p class="lead opacity-75">Mantente informado sobre las últimas novedades y actividades de la UPM.</p>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Empty State -->
+        <div class="text-center py-5 my-5" th:if="${news.totalElements == 0}">
+            <i class="bi bi-newspaper display-1 text-muted opacity-25"></i>
+            <h2 class="mt-4 fw-bold text-muted">Aún no hay noticias publicadas</h2>
+            <p class="text-muted">Estamos recopilando las últimas novedades. ¡Vuelve pronto!</p>
+            <a href="/" class="btn btn-primary mt-3">Volver al Inicio</a>
         </div>
 
-        <div class="mt-4 d-flex justify-content-between" th:if="${news.totalPages > 1}">
+        <div class="row row-cols-1 row-cols-md-3 g-4" th:if="${news.totalElements > 0}">
+            <div class="col" th:each="item : ${news}">
+                <div class="card card-hover h-100">
+                    <!-- Image -->
+                    <div th:if="${item.imageUrl != null && !item.imageUrl.isEmpty()}" class="card-img-top"
+                        th:style="'height: 200px; background-image: url(' + ${item.imageUrl} + '); background-size: cover; background-position: center;'"
+                        referrerpolicy="no-referrer">
+                    </div>
+                    <div th:unless="${item.imageUrl != null && !item.imageUrl.isEmpty()}"
+                        class="bg-secondary text-white d-flex align-items-center justify-content-center"
+                        style="height: 200px;">
+                        <i class="bi bi-newspaper display-1 opacity-25"></i>
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2 d-flex flex-wrap gap-1">
+                            <span class="badge bg-primary rounded-pill" style="font-size: 0.75rem;">Noticia</span>
+                            <span class="badge bg-warning text-dark rounded-pill" th:if="${item.eventDate}" style="font-size: 0.75rem;">
+                                <i class="bi bi-calendar-event me-1"></i>Evento
+                            </span>
+                        </div>
+                        
+                        <div class="text-muted small mb-2">
+                            <i class="bi bi-calendar3 me-1"></i>
+                            <span th:text="${item.createdAt != null ? #temporals.format(item.createdAt, 'dd/MM/yyyy') : (item.eventDate != null ? #temporals.format(item.eventDate, 'dd/MM/yyyy') : 'Reciente')}">Fecha</span>
+                        </div>
+
+                        <h5 class="card-title fw-bold" th:text="${item.title}" style="font-family: 'Playfair Display', serif; color: #111; line-height: 1.3;">Título de la noticia</h5>
+                        <p class="card-text text-muted small flex-grow-1 text-truncate" th:text="${item.content}">
+                            Descripción breve...</p>
+                    </div>
+                    
+                    <div class="card-footer bg-white border-top-0 pb-3">
+                        <a th:href="@{/news/{id}(id=${item.id})}" class="btn btn-outline-primary w-100 fw-bold">Leer Noticia</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-5 d-flex justify-content-center gap-2" th:if="${news.totalPages > 1}">
             <a th:if="${news.hasPrevious()}" th:href="@{/news(page=${news.number - 1})}"
-                class="btn btn-outline-primary">&larr; Anterior</a>
-            <span class="align-self-center">Página <span th:text="${news.number + 1}">1</span> de <span
+                class="btn btn-outline-secondary">&larr; Anterior</a>
+            <span class="btn btn-light disabled border">Página <span th:text="${news.number + 1}">1</span> de <span
                     th:text="${news.totalPages}">1</span></span>
             <a th:if="${news.hasNext()}" th:href="@{/news(page=${news.number + 1})}"
-                class="btn btn-outline-primary">Siguiente &rarr;</a>
+                class="btn btn-outline-secondary">Siguiente &rarr;</a>
         </div>
     </main>
 
