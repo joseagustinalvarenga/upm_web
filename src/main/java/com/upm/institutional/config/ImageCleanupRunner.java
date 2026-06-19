@@ -27,15 +27,17 @@ public class ImageCleanupRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Starting database image size audit and optimization...");
-        try {
-            optimizeNewsImages();
-            optimizeCourseImages();
-            optimizeCarouselImages();
-            log.info("Database image optimization completed successfully!");
-        } catch (Exception e) {
-            log.error("Error running database image optimization: ", e);
-        }
+        new Thread(() -> {
+            log.info("Starting database image size audit and optimization in background thread...");
+            try {
+                optimizeNewsImages();
+                optimizeCourseImages();
+                optimizeCarouselImages();
+                log.info("Database image optimization completed successfully!");
+            } catch (Exception e) {
+                log.error("Error running database image optimization: ", e);
+            }
+        }, "image-optimizer").start();
     }
 
     public void optimizeNewsImages() {
