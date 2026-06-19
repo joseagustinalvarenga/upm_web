@@ -5,42 +5,75 @@
         </h6>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+                <a class="nav-link" href="/admin/dashboard">
+                    <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/courses">Gestión de Cursos</a>
+                <a class="nav-link" href="/admin/courses">
+                    <i class="bi bi-mortarboard me-2"></i>Gestión de Cursos
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/news">Gestión de Noticias</a>
+                <a class="nav-link" href="/admin/news">
+                    <i class="bi bi-newspaper me-2"></i>Gestión de Noticias
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/features">Gestión de Cuadros Home</a>
+                <a class="nav-link" href="/admin/features">
+                    <i class="bi bi-grid-1x2 me-2"></i>Gestión de Cuadros Home
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/messages">Mensajes de Contacto</a>
+                <a class="nav-link" href="/admin/messages">
+                    <i class="bi bi-envelope me-2"></i>Mensajes de Contacto
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/settings">Configuración del Sitio</a>
+                <a class="nav-link" href="/admin/settings">
+                    <i class="bi bi-gear me-2"></i>Configuración del Sitio
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/carousel">Carrusel</a>
+                <a class="nav-link" href="/admin/carousel">
+                    <i class="bi bi-images me-2"></i>Carrusel
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/sedes">Gestión de Sedes</a>
+                <a class="nav-link" href="/admin/sedes">
+                    <i class="bi bi-geo-alt me-2"></i>Gestión de Sedes
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/professionals">Directorio Profesionales</a>
+                <a class="nav-link" href="/admin/professionals">
+                    <i class="bi bi-person-badge me-2"></i>Directorio Profesionales
+                </a>
             </li>
         </ul>
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
             <span>Cuenta</span>
         </h6>
         <ul class="nav flex-column mb-2">
-            <li class="nav-item">
+            <li class="nav-item mt-2">
                 <form th:action="@{/admin/logout}" method="post" class="px-3">
-                    <button type="submit" class="btn btn-sm btn-outline-danger w-100">Cerrar Sesión</button>
+                    <button type="submit" class="btn btn-sm btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2">
+                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                    </button>
                 </form>
             </li>
         </ul>
     </div>
+    <!-- Active tab script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentPath = window.location.pathname;
+            var navLinks = document.querySelectorAll("#sidebarMenu .nav-link");
+            navLinks.forEach(function(link) {
+                var href = link.getAttribute("href");
+                if (href === currentPath || (href !== "/admin/dashboard" && currentPath.startsWith(href))) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
 </nav>
