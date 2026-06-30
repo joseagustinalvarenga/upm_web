@@ -88,6 +88,35 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mapUrlInput = document.getElementById('mapUrl');
+            const latInput = document.getElementById('latitude');
+            const lonInput = document.getElementById('longitude');
+
+            if (mapUrlInput) {
+                mapUrlInput.addEventListener('input', function(e) {
+                    const url = e.target.value;
+                    if (!url) return;
+
+                    // Try to match @lat,lon
+                    let match = url.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+                    if (match && match.length >= 3) {
+                        latInput.value = match[1];
+                        lonInput.value = match[2];
+                        return;
+                    }
+
+                    // Try to match !3d... !4d...
+                    let match3d4d = url.match(/!3d(-?\d+\.\d+).*?!4d(-?\d+\.\d+)/);
+                    if (match3d4d && match3d4d.length >= 3) {
+                        latInput.value = match3d4d[1];
+                        lonInput.value = match3d4d[2];
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
