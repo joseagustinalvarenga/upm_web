@@ -588,6 +588,8 @@ html {
 
 .page-header-premium::before {
     content: '';
+    /* Keep the decorative overlay from blocking header links and buttons. */
+    pointer-events: none;
     position: absolute;
     top: 0;
     left: 0;
