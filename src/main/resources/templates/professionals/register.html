@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head}"></head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <!-- Page Header -->
+    <div class="page-header-premium">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Inscripción a la Bolsa de Trabajo</h1>
+            <p class="lead opacity-75">Regístrate como profesional o egresado de la Universidad Popular de Misiones para integrar nuestro directorio público.</p>
+        </div>
+    </div>
+
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-header bg-primary text-white p-4">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-person-badge fs-1 me-3"></i>
+                            <div>
+                                <h3 class="mb-1 fw-bold">Formulario de Registro Profesional</h3>
+                                <p class="mb-0 opacity-75 small">Completa tus datos. Tu postulación será enviada a confirmación institucional.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+
+                        <form th:action="@{/professionals/register}" th:object="${applicationForm}" method="post">
+                            
+                            <div class="row g-3">
+                                <!-- Nombre Completo -->
+                                <div class="col-md-7">
+                                    <label for="fullName" class="form-label fw-bold">Nombre Completo <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                        <input type="text" class="form-control" th:field="*{fullName}" id="fullName"
+                                            placeholder="Ej: María José Fernández" required>
+                                    </div>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Error</div>
+                                </div>
+
+                                <!-- DNI -->
+                                <div class="col-md-5">
+                                    <label for="dni" class="form-label fw-bold">DNI <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-card-heading"></i></span>
+                                        <input type="text" class="form-control" th:field="*{dni}" id="dni"
+                                            placeholder="Ej: 38123456" required>
+                                    </div>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">Error</div>
+                                </div>
+
+                                <!-- Profesion -->
+                                <div class="col-md-6">
+                                    <label for="profession" class="form-label fw-bold">Profesión u Oficio <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
+                                        <input type="text" class="form-control" th:field="*{profession}" id="profession"
+                                            placeholder="Ej: Electricista, Diseñador/a, Reparador/a..." required>
+                                    </div>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('profession')}" th:errors="*{profession}">Error</div>
+                                </div>
+
+                                <!-- Localidad -->
+                                <div class="col-md-6">
+                                    <label for="locality" class="form-label fw-bold">Localidad <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                        <input type="text" class="form-control" th:field="*{locality}" id="locality"
+                                            placeholder="Ej: Posadas, Oberá, Eldorado..." required>
+                                    </div>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('locality')}" th:errors="*{locality}">Error</div>
+                                </div>
+
+                                <!-- Telefono -->
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label fw-bold">Teléfono / WhatsApp <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                                        <input type="tel" class="form-control" th:field="*{phone}" id="phone"
+                                            placeholder="Ej: 3764123456" required>
+                                    </div>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Error</div>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label fw-bold">Correo Electrónico <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                        <input type="email" class="form-control" th:field="*{email}" id="email"
+                                            placeholder="ejemplo@correo.com" required>
+                                    </div>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+                                </div>
+
+                                <!-- Curso / Egreso UPM -->
+                                <div class="col-12">
+                                    <label for="courseCompleted" class="form-label fw-bold">Curso o Formación Realizada en la UPM</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-journal-bookmark"></i></span>
+                                        <input type="text" class="form-control" th:field="*{courseCompleted}" id="courseCompleted"
+                                            placeholder="Ej: Electricidad Domiciliaria - Sede Posadas (2024)">
+                                    </div>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('courseCompleted')}" th:errors="*{courseCompleted}">Error</div>
+                                </div>
+
+                                <!-- Notas / Experiencia -->
+                                <div class="col-12">
+                                    <label for="notes" class="form-label fw-bold">Descripción Breve / Experiencia u Observaciones</label>
+                                    <textarea class="form-control" th:field="*{notes}" id="notes" rows="4"
+                                        placeholder="Cuéntanos brevemente sobre tus servicios, disponibilidades o experiencia previa..."></textarea>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}">Error</div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                <a th:href="@{/professionals}" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left me-1"></i> Volver al Directorio
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-lg px-4">
+                                    <i class="bi bi-send-check me-2"></i> Enviar Postulación
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>

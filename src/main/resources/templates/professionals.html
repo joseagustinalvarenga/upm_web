@@ -8,13 +8,26 @@
 
     <!-- Page Header -->
     <div class="page-header-premium">
-        <div class="container">
-            <h1 class="display-3 fw-bold">Directorio de Profesionales</h1>
-            <p class="lead opacity-75">Encuentra a nuestros egresados y profesionales destacados.</p>
+        <div class="container d-flex align-items-center justify-content-between flex-wrap gap-3">
+            <div>
+                <h1 class="display-4 fw-bold mb-1">Directorio de Profesionales</h1>
+                <p class="lead opacity-75 mb-0">Encuentra a nuestros egresados y profesionales destacados.</p>
+            </div>
+            <div>
+                <a th:href="@{/professionals/register}" class="btn btn-light btn-lg text-primary fw-bold shadow-sm rounded-pill px-4">
+                    <i class="bi bi-person-plus-fill me-2"></i> Inscribirme como Profesional
+                </a>
+            </div>
         </div>
     </div>
 
-    <main class="container">
+    <main class="container my-4">
+        <!-- Success Alert -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         <!-- Filters -->
         <div class="card mb-4 border-0 shadow-sm bg-light">
             <div class="card-body">

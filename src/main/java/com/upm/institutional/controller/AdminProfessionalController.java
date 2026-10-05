@@ -1,6 +1,9 @@
 package com.upm.institutional.controller;
 
+import com.upm.institutional.model.ApplicationStatus;
 import com.upm.institutional.model.Professional;
+import com.upm.institutional.model.ProfessionalApplication;
+import com.upm.institutional.service.ProfessionalApplicationService;
 import com.upm.institutional.service.ProfessionalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AdminProfessionalController {
 
     private final ProfessionalService professionalService;
+    private final ProfessionalApplicationService applicationService;
 
     @GetMapping
     public String list(Model model, Pageable pageable) {
@@ -82,5 +86,43 @@ public class AdminProfessionalController {
         }
 
         return "redirect:/admin/professionals";
+    }
+
+    @GetMapping("/requests")
+    public String listRequests(
+            @RequestParam(required = false) ApplicationStatus status,
+            Model model,
+            Pageable pageable) {
+        Page<ProfessionalApplication> applications;
+        if (status != null) {
+            applications = applicationService.findByStatus(status, pageable);
+        } else {
+            applications = applicationService.findAll(pageable);
+        }
+        model.addAttribute("applications", applications);
+        model.addAttribute("selectedStatus", status);
+        model.addAttribute("pendingCount", applicationService.countPending());
+        return "admin/professionals/requests";
+    }
+
+    @PostMapping("/requests/{id}/approve")
+    public String approveRequest(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        applicationService.approveApplication(id);
+        redirectAttributes.addFlashAttribute("success", "Solicitud aprobada correctamente e incorporada al directorio de profesionales.");
+        return "redirect:/admin/professionals/requests";
+    }
+
+    @PostMapping("/requests/{id}/reject")
+    public String rejectRequest(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        applicationService.rejectApplication(id);
+        redirectAttributes.addFlashAttribute("success", "Solicitud marcada como rechazada.");
+        return "redirect:/admin/professionals/requests";
+    }
+
+    @PostMapping("/requests/{id}/delete")
+    public String deleteRequest(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        applicationService.deleteApplication(id);
+        redirectAttributes.addFlashAttribute("success", "Solicitud eliminada correctamente.");
+        return "redirect:/admin/professionals/requests";
     }
 }

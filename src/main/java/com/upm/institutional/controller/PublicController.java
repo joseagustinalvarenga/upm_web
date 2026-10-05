@@ -34,6 +34,7 @@ public class PublicController {
     private final com.upm.institutional.service.CarouselImageService carouselImageService;
     private final com.upm.institutional.service.SedeService sedeService;
     private final com.upm.institutional.service.ProfessionalService professionalService;
+    private final com.upm.institutional.service.ProfessionalApplicationService professionalApplicationService;
     private final com.upm.institutional.service.FeatureService featureService;
     private final AcademicOfferService academicOfferService;
 
@@ -181,5 +182,25 @@ public class PublicController {
         model.addAttribute("profession", profession);
         model.addAttribute("locality", locality);
         return "professionals";
+    }
+
+    @GetMapping("/professionals/register")
+    public String professionalRegisterForm(Model model) {
+        model.addAttribute("applicationForm", new com.upm.institutional.dto.ProfessionalApplicationForm());
+        return "professionals/register";
+    }
+
+    @PostMapping("/professionals/register")
+    public String sendProfessionalRegister(
+            @Valid @ModelAttribute("applicationForm") com.upm.institutional.dto.ProfessionalApplicationForm applicationForm,
+            BindingResult result,
+            RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "professionals/register";
+        }
+        professionalApplicationService.submitApplication(applicationForm);
+        redirectAttributes.addFlashAttribute("success", 
+                "¡Tu solicitud fue enviada con éxito! La Universidad Popular de Misiones revisará tu postulación para confirmarte en el directorio.");
+        return "redirect:/professionals";
     }
 }
