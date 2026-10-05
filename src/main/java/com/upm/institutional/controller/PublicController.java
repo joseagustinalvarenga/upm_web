@@ -181,12 +181,17 @@ public class PublicController {
         model.addAttribute("professionals", professionals);
         model.addAttribute("profession", profession);
         model.addAttribute("locality", locality);
+        if (!model.containsAttribute("applicationForm")) {
+            model.addAttribute("applicationForm", new com.upm.institutional.dto.ProfessionalApplicationForm());
+        }
         return "professionals";
     }
 
     @GetMapping("/professionals/register")
     public String professionalRegisterForm(Model model) {
-        model.addAttribute("applicationForm", new com.upm.institutional.dto.ProfessionalApplicationForm());
+        if (!model.containsAttribute("applicationForm")) {
+            model.addAttribute("applicationForm", new com.upm.institutional.dto.ProfessionalApplicationForm());
+        }
         return "professionals/register";
     }
 
@@ -196,11 +201,16 @@ public class PublicController {
             BindingResult result,
             RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            return "professionals/register";
+            redirectAttributes.addFlashAttribute("error", "Por favor completa correctamente todos los campos obligatorios (*).");
+            return "redirect:/professionals";
         }
-        professionalApplicationService.submitApplication(applicationForm);
-        redirectAttributes.addFlashAttribute("success", 
-                "¡Tu solicitud fue enviada con éxito! La Universidad Popular de Misiones revisará tu postulación para confirmarte en el directorio.");
+        try {
+            professionalApplicationService.submitApplication(applicationForm);
+            redirectAttributes.addFlashAttribute("success", 
+                    "¡Tu solicitud fue enviada con éxito! La Universidad Popular de Misiones revisará tu postulación para confirmarte en el directorio.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al procesar la solicitud: " + e.getMessage());
+        }
         return "redirect:/professionals";
     }
 }

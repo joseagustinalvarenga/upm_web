@@ -14,9 +14,9 @@
                 <p class="lead opacity-75 mb-0">Encuentra a nuestros egresados y profesionales destacados.</p>
             </div>
             <div>
-                <a th:href="@{/professionals/register}" class="btn btn-light btn-lg text-primary fw-bold shadow-sm rounded-pill px-4">
+                <button type="button" class="btn btn-light btn-lg text-primary fw-bold shadow-sm rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#registerModal">
                     <i class="bi bi-person-plus-fill me-2"></i> Inscribirme como Profesional
-                </a>
+                </button>
             </div>
         </div>
     </div>
@@ -28,19 +28,27 @@
             <span th:text="${success}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+
+        <!-- Error Alert -->
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show shadow-sm border-0 mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
         <!-- Filters -->
         <div class="card mb-4 border-0 shadow-sm bg-light">
             <div class="card-body">
                 <form action="/professionals" method="get" class="row g-3">
                     <div class="col-md-5">
-                        <label for="profession" class="form-label">Profesión</label>
+                        <label for="profession" class="form-label fw-bold">Profesión</label>
                         <input type="text" class="form-control" id="profession" name="profession"
-                            th:value="${profession}" placeholder="Ej: Abogado, Contador...">
+                            th:value="${profession}" placeholder="Ej: Electricista, Abogado, Plomero...">
                     </div>
                     <div class="col-md-5">
-                        <label for="locality" class="form-label">Localidad</label>
+                        <label for="locality" class="form-label fw-bold">Localidad</label>
                         <input type="text" class="form-control" id="locality" name="locality" th:value="${locality}"
-                            placeholder="Ej: Posadas, Oberá...">
+                            placeholder="Ej: Posadas, Oberá, Eldorado...">
                     </div>
                     <div class="col-md-2 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary w-100">Filtrar</button>
@@ -65,9 +73,9 @@
                         <td class="fw-bold" th:text="${pro.name}">Juan Perez</td>
                         <td><span class="badge bg-info text-dark" th:text="${pro.profession}">Abogado</span></td>
                         <td>
-                            <a th:if="${pro.phone}" th:href="'tel:' + ${pro.phone}"
-                                class="text-decoration-none text-muted">
-                                <i class="bi bi-telephone me-1"></i> <span th:text="${pro.phone}">3764...</span>
+                            <a th:if="${pro.phone}" th:href="'https://wa.me/' + ${#strings.replace(pro.phone, ' ', '')}" target="_blank"
+                                class="text-decoration-none text-success fw-bold">
+                                <i class="bi bi-whatsapp me-1"></i> <span th:text="${pro.phone}">3764...</span>
                             </a>
                         </td>
                         <td><i class="bi bi-geo-alt me-1 text-danger"></i> <span
@@ -101,6 +109,81 @@
             </nav>
         </div>
     </main>
+
+    <!-- Registration Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-primary text-white p-4">
+                    <h4 class="modal-title fw-bold" id="registerModalLabel">
+                        <i class="bi bi-person-badge me-2"></i>Inscripción a la Bolsa de Trabajo
+                    </h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/professionals/register}" th:object="${applicationForm}" method="post">
+                    <div class="modal-body p-4">
+                        <p class="text-muted small mb-4">Completa el formulario para inscribirte como egresado/profesional de la UPM. Tu solicitud será enviada para confirmación institucional.</p>
+                        
+                        <div class="row g-3">
+                            <!-- Nombre Completo -->
+                            <div class="col-md-7">
+                                <label for="fullName" class="form-label fw-bold">Nombre Completo <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" th:field="*{fullName}" id="fullName" placeholder="Ej: María José Fernández" required>
+                            </div>
+
+                            <!-- DNI -->
+                            <div class="col-md-5">
+                                <label for="dni" class="form-label fw-bold">DNI <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" th:field="*{dni}" id="dni" placeholder="Ej: 38123456" required>
+                            </div>
+
+                            <!-- Profesion -->
+                            <div class="col-md-6">
+                                <label for="profession" class="form-label fw-bold">Profesión u Oficio <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" th:field="*{profession}" id="profession" placeholder="Ej: Electricista, Diseñador/a..." required>
+                            </div>
+
+                            <!-- Localidad -->
+                            <div class="col-md-6">
+                                <label for="locality" class="form-label fw-bold">Localidad <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" th:field="*{locality}" id="locality" placeholder="Ej: Posadas, Oberá..." required>
+                            </div>
+
+                            <!-- Telefono -->
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label fw-bold">Teléfono / WhatsApp <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" th:field="*{phone}" id="phone" placeholder="Ej: 3764123456" required>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-md-6">
+                                <label for="email" class="form-label fw-bold">Correo Electrónico <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="ejemplo@correo.com" required>
+                            </div>
+
+                            <!-- Curso UPM -->
+                            <div class="col-12">
+                                <label for="courseCompleted" class="form-label fw-bold">Curso o Formación Realizada en la UPM</label>
+                                <input type="text" class="form-control" th:field="*{courseCompleted}" id="courseCompleted" placeholder="Ej: Electricidad Domiciliaria - Sede Posadas (2024)">
+                            </div>
+
+                            <!-- Notas / Experiencia -->
+                            <div class="col-12">
+                                <label for="notes" class="form-label fw-bold">Descripción Breve / Experiencia u Observaciones</label>
+                                <textarea class="form-control" th:field="*{notes}" id="notes" rows="3" placeholder="Cuéntanos sobre tus servicios o disponibilidad..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light p-3">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary px-4 fw-bold">
+                            <i class="bi bi-send-check me-1"></i> Enviar Postulación
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
