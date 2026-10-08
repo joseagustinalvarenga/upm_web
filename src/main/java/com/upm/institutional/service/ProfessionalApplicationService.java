@@ -55,8 +55,7 @@ public class ProfessionalApplicationService {
             if (fromEmail != null && !fromEmail.isBlank()) {
                 mailMessage.setFrom(fromEmail);
             }
-            // User requested email to arrive at universidadpopular@gmail.com
-            mailMessage.setTo("universidadpopular@gmail.com", "posadasuniversidadpopular@gmail.com");
+            mailMessage.setTo("posadasuniversidadpopular@gmail.com");
             mailMessage.setSubject("Nueva Solicitud de Profesional - UPM: " + app.getFullName());
 
             StringBuilder body = new StringBuilder();
@@ -73,7 +72,7 @@ public class ProfessionalApplicationService {
 
             mailMessage.setText(body.toString());
             emailSender.send(mailMessage);
-            log.info("Email de notificación de profesional enviado a universidadpopular@gmail.com para {}", app.getEmail());
+            log.info("Email de notificación de profesional enviado a posadasuniversidadpopular@gmail.com para {}", app.getEmail());
         } catch (Exception e) {
             log.error("Error al enviar email de notificación de profesional", e);
             // Non-blocking: record remains saved in database for admin review
