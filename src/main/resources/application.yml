@@ -1,3 +1,6 @@
+app:
+  public-base-url: ${PUBLIC_BASE_URL:https://upmisiones.com.ar}
+
 server:
   port: ${PORT:8080}
 

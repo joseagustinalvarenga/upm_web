@@ -28,6 +28,9 @@ public class ProfessionalApplicationService {
     @Value("${spring.mail.username:no-reply@upm.edu.ar}")
     private String fromEmail;
 
+    @Value("${app.public-base-url:https://upmisiones.com.ar}")
+    private String publicBaseUrl;
+
     @Transactional
     public ProfessionalApplication submitApplication(ProfessionalApplicationForm form) {
         ProfessionalApplication app = new ProfessionalApplication();
@@ -69,6 +72,10 @@ public class ProfessionalApplicationService {
             body.append("• Curso / Egreso UPM: ").append(app.getCourseCompleted() != null ? app.getCourseCompleted() : "No especificado").append("\n");
             body.append("• Observaciones / Experiencia: ").append(app.getNotes() != null ? app.getNotes() : "Sin observaciones").append("\n\n");
             body.append("Por favor ingresa al Panel de Administración de la UPM para confirmar o rechazar esta solicitud.\n");
+            body.append("Revisar solicitudes: ")
+                    .append(publicBaseUrl.replaceAll("/+$", ""))
+                    .append("/admin/professionals/requests\n");
+            body.append("Si no has iniciado sesión, ingresa con tu cuenta de administrador para continuar.\n");
 
             mailMessage.setText(body.toString());
             emailSender.send(mailMessage);
