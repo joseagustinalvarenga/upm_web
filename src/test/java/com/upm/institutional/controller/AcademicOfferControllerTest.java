@@ -44,6 +44,9 @@ public class AcademicOfferControllerTest {
     private ProfessionalService professionalService;
 
     @MockBean
+    private com.upm.institutional.service.ProfessionalApplicationService professionalApplicationService;
+
+    @MockBean
     private FeatureService featureService;
 
     @MockBean
