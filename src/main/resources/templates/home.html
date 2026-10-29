@@ -6,7 +6,12 @@
 <body>
     <!-- Preloader / Splash Screen -->
     <div id="preloader">
-        <svg class="preloader-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <svg class="preloader-lights" viewBox="0 0 1200 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M-20 12 Q150 105 300 22 Q450 105 600 22 Q750 105 900 22 Q1050 105 1220 12" fill="none" stroke="#24523a" stroke-width="5"/>
+            <g fill="#ffe4a1"><ellipse cx="55" cy="48" rx="6" ry="10"/><ellipse cx="205" cy="66" rx="6" ry="10"/><ellipse cx="355" cy="53" rx="6" ry="10"/><ellipse cx="505" cy="66" rx="6" ry="10"/><ellipse cx="655" cy="53" rx="6" ry="10"/><ellipse cx="805" cy="66" rx="6" ry="10"/><ellipse cx="955" cy="53" rx="6" ry="10"/><ellipse cx="1105" cy="63" rx="6" ry="10"/></g>
+        </svg>
+        <div class="preloader-sparkles" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span><span>✧</span><span>✦</span><span>✧</span></div>
+        <svg class="preloader-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <!-- Book Pages body -->
             <path class="preloader-path-filled" d="M15,70 L50,85 L85,70 L85,40 L50,55 L15,40 Z" />
             <!-- Book Pages left -->
@@ -25,9 +30,15 @@
             <path class="preloader-path" d="M50,25 L85,40 L85,50" />
             <!-- Cap base -->
             <path class="preloader-path" d="M35,33 L35,48 C35,55 65,55 65,48 L65,33" />
+            <g class="preloader-santa-hat">
+                <path d="M51 16 Q57 -2 73 5 Q83 9 83 23 L76 22 Q72 10 65 13 L67 20 Z" fill="#b92529"/>
+                <path d="M49 15 Q59 13 69 19 L67 25 Q57 19 48 21 Z" fill="#fff9ec"/>
+                <circle cx="81" cy="25" r="5" fill="#fff9ec"/>
+            </g>
         </svg>
         <div class="preloader-text">UPM</div>
         <div class="preloader-phrase">Educación para el Trabajo</div>
+        <div class="preloader-christmas-wish">Compartimos la magia de aprender</div>
     </div>
 
     <!-- Script to hide preloader after animation -->

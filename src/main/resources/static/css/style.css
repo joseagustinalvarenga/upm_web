@@ -568,6 +568,28 @@ html {
     visibility: hidden;
 }
 
+#preloader { overflow: hidden; background-image: radial-gradient(ellipse at 50% 45%, #ffbd6130, transparent 65%); }
+.preloader-lights { position: absolute; inset: 0 0 auto; width: 100%; height: clamp(65px, 12vw, 115px); }
+.preloader-lights ellipse { filter: drop-shadow(0 0 5px #ffe2a1); animation: preloader-glow 1.8s ease-in-out infinite alternate; }
+.preloader-lights ellipse:nth-child(even) { animation-delay: .8s; }
+.preloader-santa-hat { opacity: 0; animation: fade-in-up .7s ease-out .5s forwards; }
+.preloader-christmas-wish { color: #fff0c9; font-family: 'Playfair Display', serif; font-size: 1rem; margin: 22px 20px 0; text-align: center; opacity: 0; animation: fade-in-up .7s ease-out 1.8s forwards; }
+.preloader-sparkles { position: absolute; inset: 0; pointer-events: none; }
+.preloader-sparkles span { position: absolute; color: #ffe3a1; font-size: 24px; opacity: .6; animation: preloader-glow 2s ease-in-out infinite alternate; }
+.preloader-sparkles span:nth-child(1) { top: 26%; left: 24%; }
+.preloader-sparkles span:nth-child(2) { top: 40%; right: 23%; animation-delay: .4s; font-size: 36px; }
+.preloader-sparkles span:nth-child(3) { bottom: 24%; left: 31%; animation-delay: .8s; font-size: 16px; }
+.preloader-sparkles span:nth-child(4) { top: 22%; right: 35%; animation-delay: .6s; font-size: 18px; }
+.preloader-sparkles span:nth-child(5) { bottom: 22%; right: 28%; animation-delay: 1s; }
+.preloader-sparkles span:nth-child(6) { top: 48%; left: 15%; animation-delay: .2s; font-size: 14px; }
+@keyframes preloader-glow { from { opacity: .4; } to { opacity: 1; filter: drop-shadow(0 0 8px #ffe6ad); } }
+@media (prefers-reduced-motion: reduce) {
+    #preloader .preloader-svg, #preloader .preloader-lights ellipse, #preloader .preloader-sparkles span { animation: none; }
+    #preloader .preloader-santa-hat, #preloader .preloader-text, #preloader .preloader-phrase, #preloader .preloader-christmas-wish { animation: none; opacity: 1; }
+    #preloader .preloader-path { animation: none; stroke-dashoffset: 0; }
+    #preloader .preloader-path-filled { animation: none; opacity: .2; }
+}
+
 .preloader-svg {
     width: 120px;
     height: 120px;
