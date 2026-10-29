@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head><th:block th:replace="~{fragments/header :: head}"></th:block><link rel="stylesheet" href="/css/christmas.css"></head>
+<body class="christmas-page"><nav th:replace="~{fragments/header :: nav}"></nav>
+<main class="christmas-access container">
+    <div class="christmas-intro"><span class="christmas-eyebrow">UN REGALO DE UPM PARA VOS</span><h1>La magia está<br>en lo que creamos.</h1><p>Ideas para aprender, compartir y darle tu toque a estas fiestas.</p><div class="christmas-ornaments" aria-hidden="true">✦ <i class="bi bi-gift"></i> ✧</div></div>
+    <section class="christmas-login" aria-labelledby="access-title"><div class="christmas-lock"><i class="bi bi-lock"></i></div><p class="christmas-eyebrow">ESPECIAL DE NAVIDAD</p><h2 id="access-title">Un regalo para<br>seguir aprendiendo</h2><p>Ingresá el código que te compartimos en UPM.</p>
+        <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+        <form th:action="@{/navidad/ingresar}" method="post"><label for="code" class="form-label fw-bold">Código de acceso</label><input id="code" name="code" type="password" class="form-control form-control-lg" required maxlength="64" autocomplete="off" placeholder="Tu código de Navidad" aria-describedby="code-help"><small id="code-help" class="d-block text-muted mt-2">¿No tenés el código? Pedíselo a tu docente.</small><button class="christmas-button w-100 mt-4" type="submit">Ingresar al especial <i class="bi bi-arrow-right ms-2"></i></button></form>
+        <div class="christmas-note"><i class="bi bi-mortarboard me-2"></i>Exclusivo para alumnos · Acceso por 2 horas</div>
+    </section>
+</main><footer class="christmas-footer">UPM · Aprender también es compartir.</footer></body></html>

@@ -34,6 +34,7 @@ class AdminLoginTest {
     @Autowired MockMvc mvc;
     @MockBean UserRepository users;
     @MockBean FeatureRepository features;
+    @MockBean com.upm.institutional.service.SiteSettingService siteSettings;
 
     @BeforeEach
     void seedAccountFromMigration() throws Exception {

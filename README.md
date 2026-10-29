@@ -65,3 +65,18 @@ mvn test "-Drecovery.admin.password=<contraseña entregada>"
 - **Base de Datos**: PostgreSQL con Migraciones Flyway.
 - **Seguridad**: Autenticación basada en formularios, BCrypt hashing.
 # upm_web
+
+## Especial de Navidad
+
+- Administración: `/admin/navidad` (requiere rol ADMIN).
+- Alumnos: `/navidad`; galería: `/navidad/galeria`.
+- La migración `V20__christmas_special.sql` crea la galería y deja el especial **desactivado**. No hay activación por fecha.
+- En el panel, cargar los videos, definir un código compartido de 6 a 64 caracteres y marcar «Habilitar el especial para alumnos» solamente cuando corresponda. Dejar el campo de código vacío conserva el actual.
+- Cada video admite título, descripción, categoría libre, enlace HTTPS de YouTube/Instagram/TikTok/Facebook, portada opcional de hasta 5 MB, orden y visibilidad. Las portadas se comprimen y se guardan en la base de datos. No se incluyen videos de ejemplo.
+- Guardar la configuración revoca todas las sesiones de alumnos anteriores. Apagar el especial también bloquea enlaces directos y oculta la entrada del menú. La autorización dura como máximo 2 horas; salir no cierra la sesión administrativa.
+- El código se almacena como hash BCrypt. Tras 5 fallos por dirección remota hay un bloqueo de 15 minutos. El contador reside en memoria por instancia y se reinicia al reiniciar el servidor; en despliegues con varias instancias se debe usar un contador compartido y sesiones compartidas. No se confía en encabezados de IP enviados por el cliente.
+- Los formularios de esta sección incluyen protección CSRF. Se conserva el comportamiento del resto de los formularios existentes.
+- El acceso limita la galería, no la privacidad de videos alojados en redes externas. Los enlaces abren en otra pestaña y pueden requerir una cuenta en la red social.
+- La migración se aplica al desplegar la aplicación con Flyway y PostgreSQL. El desarrollo local con perfil `local` usa H2 y creación de tablas por Hibernate.
+
+Pruebas: `mvn test`. Si el entorno Windows restringe la conexión dinámica del agente Mockito, ejecutar Maven con `-DargLine=-javaagent:<ruta local a byte-buddy-agent.jar>`.

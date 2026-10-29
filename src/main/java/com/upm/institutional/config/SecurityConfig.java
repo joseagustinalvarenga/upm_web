@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -27,6 +26,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/",
                                 "/courses/**",
+                                "/navidad", "/navidad/**",
                                 "/news/**",
                                 "/contact/**",
                                 "/css/**",
@@ -54,7 +54,10 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/admin/logout"))
                         .logoutSuccessUrl("/admin/login?logout")
                         .permitAll())
-                .csrf(AbstractHttpConfigurer::disable);
+                .csrf(csrf -> csrf.requireCsrfProtectionMatcher(request ->
+                        !java.util.Set.of("GET", "HEAD", "OPTIONS", "TRACE").contains(request.getMethod())
+                        && (request.getRequestURI().substring(request.getContextPath().length()).startsWith("/navidad")
+                            || request.getRequestURI().substring(request.getContextPath().length()).startsWith("/admin/navidad"))));
 
         return http.build();
     }
