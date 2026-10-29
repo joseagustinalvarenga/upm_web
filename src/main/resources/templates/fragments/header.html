@@ -29,11 +29,11 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" th:fragment="nav">
-        <div class="container">
+        <div class="container-fluid upm-nav-container">
             <a class="navbar-brand" href="/">
                 <i class="bi bi-mortarboard-fill me-2"></i>UPM
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Abrir menú de navegación">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -45,10 +45,10 @@
                     <li class="nav-item"><a class="nav-link" href="/news">Noticias</a></li>
                     <li class="nav-item"><a class="nav-link" href="/professionals">Profesionales</a></li>
                     <li class="nav-item"><a class="nav-link" href="/contact">Contacto</a></li>
-                    <li class="nav-item" th:if="${christmasEnabled}"><a class="nav-link" href="/navidad"><i class="bi bi-gift me-1"></i>Navidad</a></li>
+                    <li class="nav-item" th:if="${christmasEnabled}"><a class="nav-link nav-christmas" href="/navidad"><span class="nav-christmas-sparkle" aria-hidden="true">✦</span><i class="bi bi-gift me-1" aria-hidden="true"></i>Navidad<span class="nav-christmas-sparkle" aria-hidden="true">✧</span></a></li>
                 </ul>
                 <div class="d-flex ms-lg-3">
-                    <a href="/admin/login" class="btn btn-outline-light btn-sm rounded-pill px-3">Acceso
+                    <a href="/admin/login" class="btn btn-outline-light btn-sm rounded-pill px-3 nav-admin">Acceso
                         Administrador</a>
                 </div>
             </div>

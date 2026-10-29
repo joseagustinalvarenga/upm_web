@@ -50,10 +50,87 @@ h6 {
 .navbar-custom .nav-link {
     color: rgba(255, 255, 255, 0.95) !important;
     font-weight: 600;
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
-    font-size: 1rem;
+    padding-left: .75rem !important;
+    padding-right: .75rem !important;
+    font-size: .875rem;
+    white-space: nowrap;
     transition: all 0.3s ease;
+}
+
+.navbar-custom .upm-nav-container {
+    padding-inline: clamp(20px, 2.5vw, 48px);
+    gap: 1.5rem;
+}
+
+.navbar-custom .navbar-brand {
+    flex-shrink: 0;
+    margin-right: auto;
+}
+
+.navbar-custom .nav-admin {
+    font-size: .75rem;
+    white-space: nowrap;
+}
+
+.navbar-custom .nav-link.nav-christmas {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    border: 1px solid #ffe6ad99;
+    border-radius: 999px;
+    background: linear-gradient(115deg, #fff2c620, #ffe2a342, #fff2c620);
+    color: #fff6d8 !important;
+    box-shadow: 0 0 14px #ffe5a52b, inset 0 0 10px #fff3cf15;
+    text-shadow: 0 0 10px #fff0b56b;
+    margin-inline: .35rem;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.navbar-custom .nav-christmas::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 25%, #fff5cd66 50%, transparent 75%);
+    transform: translateX(-150%);
+    animation: christmas-nav-shine 5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.nav-christmas-sparkle {
+    color: #ffe7a3;
+    font-size: .7rem;
+    animation: christmas-nav-twinkle 2.8s ease-in-out infinite;
+}
+
+.nav-christmas-sparkle:last-child { animation-delay: 1.4s; }
+
+@keyframes christmas-nav-shine {
+    0%, 60% { transform: translateX(-150%); }
+    90%, 100% { transform: translateX(150%); }
+}
+
+@keyframes christmas-nav-twinkle {
+    0%, 100% { opacity: .6; transform: scale(.85); }
+    50% { opacity: 1; transform: scale(1.15); }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .navbar-custom .upm-nav-container { gap: .5rem; padding-inline: 20px; }
+    .navbar-custom .nav-link { font-size: .76rem; padding-inline: .45rem !important; }
+    .navbar-custom .nav-admin { font-size: .68rem; padding-inline: .65rem !important; }
+}
+
+@media (max-width: 991.98px) {
+    .navbar-custom .upm-nav-container { column-gap: 1rem; row-gap: .5rem; }
+    .navbar-custom .nav-link { padding-block: .7rem; }
+    .navbar-custom .nav-link.nav-christmas { margin: .5rem 0 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navbar-custom .nav-christmas::after, .nav-christmas-sparkle { animation: none; }
 }
 
 .navbar-custom .nav-link:hover,

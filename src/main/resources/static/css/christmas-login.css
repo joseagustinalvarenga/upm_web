@@ -1,0 +1,33 @@
+.christmas-login-page { background: #f3ead9; }
+.christmas-login-scene {
+    min-height: calc(100svh - 100px);
+    display: grid;
+    place-items: center;
+    padding: 70px 24px 100px;
+    background: url('/images/christmas-login-background.png') center / 100% 100% no-repeat;
+}
+.christmas-login-scene .christmas-login {
+    width: 100%;
+    max-width: 460px;
+    padding: 30px 38px 26px;
+    text-align: center;
+    background: #fffefaed;
+    border: 1px solid #fff8;
+    border-radius: 18px;
+    box-shadow: 0 18px 45px #65502c21;
+}
+.christmas-login-emblem { display: grid; place-items: center; height: 100px; margin-bottom: 6px; }
+.christmas-lock-image { display: block; width: 132px; height: 100px; object-fit: contain; }
+.christmas-login-scene h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.65rem, 2.7vw, 2rem); line-height: 1.12; letter-spacing: -.035em; color: #18372b; margin: 0 0 14px; }
+.christmas-login-scene .christmas-login > p { font-size: .85rem; line-height: 1.6; color: #4c5750; margin-bottom: 26px; }
+.christmas-login-scene form { text-align: left; }
+.christmas-login-scene .form-label { font-size: .8rem; margin-bottom: 7px; }
+.christmas-login-scene .form-control { border: 1px solid #bfc5c5; background: #fff; border-radius: 8px; font-size: 1rem; height: 46px; }
+.christmas-login-scene .christmas-button { margin-top: 18px; padding: 12px 16px; border-radius: 8px; font-size: .85rem; }
+.christmas-login-scene .christmas-note { margin-top: 26px; padding-top: 20px; font-size: .75rem; color: #4c5750; }
+@media (max-width: 575.98px) {
+    .christmas-login-scene { padding: 60px 26px 100px; }
+    .christmas-login-scene .christmas-login { padding: 24px 24px 22px; border-radius: 14px; }
+    .christmas-login-scene .christmas-login > p { font-size: .75rem; margin-bottom: 22px; }
+    .christmas-login-scene h1 { font-size: 1.65rem; }
+}
