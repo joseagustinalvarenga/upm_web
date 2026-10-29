@@ -67,6 +67,17 @@ h6 {
     margin-right: auto;
 }
 
+.navbar-custom .upm-christmas-logo {
+    display: block;
+    width: 174px;
+    height: 58px;
+    object-fit: contain;
+}
+
+@media (max-width: 1199.98px) {
+    .navbar-custom .upm-christmas-logo { width: 144px; height: 48px; }
+}
+
 .navbar-custom .nav-admin {
     font-size: .75rem;
     white-space: nowrap;
