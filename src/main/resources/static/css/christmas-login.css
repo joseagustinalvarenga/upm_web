@@ -4,7 +4,7 @@
     display: grid;
     place-items: center;
     padding: 70px 24px 100px;
-    background: url('/images/christmas-login-background.png') center / 100% 100% no-repeat;
+    background: url('/images/christmas-login-desktop.png') center / cover no-repeat;
 }
 .christmas-login-scene .christmas-login {
     width: 100%;
@@ -25,6 +25,9 @@
 .christmas-login-scene .form-control { border: 1px solid #bfc5c5; background: #fff; border-radius: 8px; font-size: 1rem; height: 46px; }
 .christmas-login-scene .christmas-button { margin-top: 18px; padding: 12px 16px; border-radius: 8px; font-size: .85rem; }
 .christmas-login-scene .christmas-note { margin-top: 26px; padding-top: 20px; font-size: .75rem; color: #4c5750; }
+@media (max-width: 767.98px) {
+    .christmas-login-scene { background-image: url('/images/christmas-login-background.png'); }
+}
 @media (max-width: 575.98px) {
     .christmas-login-scene { padding: 60px 26px 100px; }
     .christmas-login-scene .christmas-login { padding: 24px 24px 22px; border-radius: 14px; }
